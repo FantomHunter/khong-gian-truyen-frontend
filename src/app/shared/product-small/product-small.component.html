@@ -1,0 +1,14 @@
+<div class="product__sidebar__comment__item row ">
+    <div class="product__sidebar__comment__item__pic col-4 align-items-stretch d-flex mx-0">
+        <!-- [ngStyle]="{'background-image': 'url('+ product.imageUrl+')'}"> -->
+
+        <img src="{{ product.imageUrl}}" alt="" class="align-items-stretch">
+    </div>
+    <div class="product__sidebar__comment__item__text col-7">
+        <ul *ngIf="product.categoryList.length > 0">
+            <li *ngFor="let category of product.categoryList">{{ category }}</li>
+        </ul>
+        <h5><a href="#">{{ product.name }}</a></h5>
+        <span><i class="fa fa-eye"></i> {{ product.nbView}} Views</span>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="product__item">
+    <div class="product__item__pic set-bg" [ngStyle]="{'background-image': 'url('+ product.imageUrl+')'}">
+        <div class="ep">{{ product.status }}</div>
+        <div class="comment"><i class="fa fa-comments"></i> {{ product.nbComment }}</div>
+        <div class="view"><i class="fa fa-eye"></i> {{product.nbView}}</div>
+    </div>
+    <div class="product__item__text">
+        <ul *ngIf="product.categoryList.length > 0">
+            <li *ngFor="let category of product.categoryList">{{ category }}</li>
+        </ul>
+        <h5><a href="#">{{ product.name }}</a></h5>
+    </div>
+</div>

@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./sass/variable";
+@import "./sass/mixins";
+
+@import "./sass/base";
+@import "./sass/header";
+@import "./sass/hero";
+@import "./sass/product";
+@import "./sass/anime-details";
+@import "./sass/anime-watching";
+@import "./sass/breadcrumb";
+@import "./sass/blog";
+@import "./sass/blog-details";
+@import "./sass/login";
+@import "./sass/signup";
+@import "./sass/footer";
+@import "./sass/responsive";

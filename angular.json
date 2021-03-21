@@ -28,9 +28,13 @@
             "aot": true,
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles.scss",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/font-awesome/css/font-awesome.min.css"
+              "./node_modules/font-awesome/css/font-awesome.min.css",
+              "src/styles.scss",
+              "src/css/elegant-icons.css",
+              "src/css/nice-select.css",
+              "src/css/plyr.css",
+              "src/css/slicknav.min.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
