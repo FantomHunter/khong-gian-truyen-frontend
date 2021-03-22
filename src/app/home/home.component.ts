@@ -10,8 +10,6 @@ export class HomeComponent implements OnInit {
   trendingList: Product[] = [];
   popularList: Product[] = [];
   recentList: Product[] = [];
-  sideBarViewList: Product[] = [];
-  sideBarCommentList: Product[] = [];
 
   constructor() {
     const defautItem = {
@@ -27,14 +25,6 @@ export class HomeComponent implements OnInit {
       this.trendingList.push(defautItem);
       this.popularList.push(defautItem);
       this.recentList.push(defautItem);
-      this.sideBarViewList.push({
-        ...defautItem,
-        name: 'sidebar view product name',
-      });
-      this.sideBarCommentList.push({
-        ...defautItem,
-        name: 'sidebar comment product name',
-      });
     }
   }
 
