@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Product } from '../core/model/product.model';
 
 @Component({
@@ -7,6 +8,9 @@ import { Product } from '../core/model/product.model';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  trendingList$: Observable<Product[]>;
+  popularList$: Observable<Product[]>;
+  recentList$: Observable<Product[]>;
   trendingList: Product[] = [];
   popularList: Product[] = [];
   recentList: Product[] = [];
@@ -26,6 +30,9 @@ export class HomeComponent implements OnInit {
       this.popularList.push(defautItem);
       this.recentList.push(defautItem);
     }
+    this.trendingList$ = of(this.trendingList);
+    this.popularList$ = of(this.popularList);
+    this.recentList$ = of(this.recentList);
   }
 
   ngOnInit(): void {}

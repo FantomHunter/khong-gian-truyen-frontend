@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { ProductDetail } from 'src/app/core/model/product-details.model';
 import { Comment } from 'src/app/core/model/comment.model';
 import { Product } from 'src/app/core/model/product.model';
@@ -9,8 +11,11 @@ import { Product } from 'src/app/core/model/product.model';
   styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit {
+  relatedList$: Observable<Product[]>;
+  commentList$: Observable<Comment[]>;
   relatedList: Product[] = [];
   commentList: Comment[] = [];
+  currentProductDetails$: Observable<ProductDetail>;
   currentProductDetails: ProductDetail = {
     id: -1,
     name: 'Product Details',
@@ -49,6 +54,9 @@ export class ProductDetailsComponent implements OnInit {
       this.relatedList.push(defautItem);
       this.commentList.push(defautComment);
     }
+    this.relatedList$ = of(this.relatedList);
+    this.commentList$ = of(this.commentList);
+    this.currentProductDetails$ = of(this.currentProductDetails).pipe(delay(1000));
   }
 
   ngOnInit(): void {}

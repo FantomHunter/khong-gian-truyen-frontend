@@ -19,17 +19,17 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let product of currentList">
+        <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let product of (productPaging$|async)?.currentList">
             <app-product [product]="product"></app-product>
         </div>
     </div>
 </div>
 <div class="product__pagination">
-    <a href="#" *ngIf="page != 1"><i class="fa fa-angle-double-left"></i></a>
+    <a href="#" *ngIf="hasPrevious$|async"><i class="fa fa-angle-double-left"></i></a>
     <a href="#" class="current-page">1</a>
     <!-- <a href="#">2</a>
     <a href="#">3</a>
     <a href="#">4</a>
     <a href="#">5</a> -->
-    <a href="#" *ngIf=" (size*page +1) < total"><i class="fa fa-angle-double-right"></i></a>
+    <a href="#" *ngIf="hasNext$|async"><i class="fa fa-angle-double-right"></i></a>
 </div>

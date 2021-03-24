@@ -10,7 +10,7 @@
             <li data-filter=".years">Years</li>
         </ul>
         <div class="filter__gallery">
-            <app-product-medium *ngFor="let product of sideBarViewList" [product]="product">
+            <app-product-medium *ngFor="let product of sideBarViewList$ | async " [product]="product">
             </app-product-medium>
         </div>
     </div>
@@ -18,7 +18,7 @@
         <div class="section-title">
             <h5>New Comment</h5>
         </div>
-        <app-product-small *ngFor="let product of sideBarCommentList" [product]="product">
+        <app-product-small *ngFor="let product of sideBarCommentList$ | async" [product]="product">
         </app-product-small>
     </div>
 </div>

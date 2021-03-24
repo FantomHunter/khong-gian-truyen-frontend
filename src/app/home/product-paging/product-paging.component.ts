@@ -1,5 +1,7 @@
+import { Observable, of } from 'rxjs';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Product } from 'src/app/core/model/product.model';
+import { ProductPaging } from 'src/app/core/model/product-paging.model';
 
 @Component({
   selector: 'app-product-paging',
@@ -8,12 +10,13 @@ import { Product } from 'src/app/core/model/product.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductPagingComponent implements OnInit {
+  productPaging$: Observable<ProductPaging>;
   currentList: Product[] = [];
   size = 20;
   page = 1;
   total = 200;
-  hasNext = true;
-  hasPrevious = false;
+  hasNext$ = of(true);
+  hasPrevious$ = of(false);
 
   constructor() {
     const defautItem = {
@@ -28,6 +31,12 @@ export class ProductPagingComponent implements OnInit {
     for (let i = 0; i < 20; i++) {
       this.currentList.push(defautItem);
     }
+    this.productPaging$ = of({
+      currentList: this.currentList,
+      size: this.size,
+      start: this.page,
+      total: this.total,
+    });
   }
 
   ngOnInit(): void {}

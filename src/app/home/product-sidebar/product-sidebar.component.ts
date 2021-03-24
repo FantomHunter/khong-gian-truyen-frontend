@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Product } from 'src/app/core/model/product.model';
 
 @Component({
@@ -8,11 +9,11 @@ import { Product } from 'src/app/core/model/product.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductSidebarComponent implements OnInit {
-  constructor() {}
-
+  sideBarViewList$: Observable<Product[]>;
+  sideBarCommentList$: Observable<Product[]>;
   sideBarViewList: Product[] = [];
   sideBarCommentList: Product[] = [];
-  ngOnInit(): void {
+  constructor() {
     const defautItem = {
       id: -1,
       name: 'default',
@@ -32,5 +33,9 @@ export class ProductSidebarComponent implements OnInit {
         name: 'sidebar comment product name',
       });
     }
+    this.sideBarViewList$ = of(this.sideBarViewList);
+    this.sideBarCommentList$ = of(this.sideBarCommentList);
   }
+
+  ngOnInit(): void {}
 }
