@@ -4,6 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers, metaReducers } from './reducers';
 
 @NgModule({
   declarations: [
@@ -12,7 +17,12 @@ import { SharedModule } from './shared/shared.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([]),
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [],
   bootstrap: [AppComponent]
