@@ -18,6 +18,7 @@ import { TrendingEffects } from './store/effect/trending.effects';
 import { RouteEffects } from './store/effect/route.effects';
 import * as fromDetails from './store/reducer/details.reducer';
 import { DetailsEffects } from './store/effect/details.effects';
+import * as fromAllProduct from './store/reducer/all-product.reducer';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { DetailsEffects } from './store/effect/details.effects';
     ),
     EffectsModule.forFeature([TrendingEffects, RouteEffects, DetailsEffects]),
     StoreModule.forFeature(fromDetails.detailsFeatureKey, fromDetails.reducer),
+    StoreModule.forFeature(fromAllProduct.allProductFeatureKey, fromAllProduct.reducer),
   ],
   providers: [
     {

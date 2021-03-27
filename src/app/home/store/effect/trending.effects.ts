@@ -3,7 +3,11 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, concatMap, map } from 'rxjs/operators';
 import { ProductServiceApi } from 'src/app/core/service/product.service.api';
-import { TrendingApiActions, TrendingPageActions } from '../action';
+import {
+  TrendingApiActions,
+  TrendingPageActions,
+  AllProductsApiActions,
+} from '../action';
 
 @Injectable()
 export class TrendingEffects {
@@ -25,14 +29,14 @@ export class TrendingEffects {
 
   loadAllTrendings$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(TrendingApiActions.loadAllTrending),
+      ofType(AllProductsApiActions.loadAllProducts),
       concatMap(({ start, size, order }) =>
         this.productServiceApi.getAllProductWithPaging(start, size, order).pipe(
           map((productsPaging) =>
-            TrendingApiActions.loadAllTrendingsSuccess({ productsPaging })
+            AllProductsApiActions.loadAllProductsSuccess({ productsPaging })
           ),
           catchError((error) =>
-            of(TrendingApiActions.loadAllTrendingsFailure({ error }))
+            of(AllProductsApiActions.loadAllProductsFailure({ error }))
           )
         )
       )

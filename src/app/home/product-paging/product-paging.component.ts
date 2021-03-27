@@ -3,8 +3,11 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Product } from 'src/app/core/model/product.model';
 import { ProductPaging } from 'src/app/core/model/product-paging.model';
 import { select, Store } from '@ngrx/store';
-import { TrendingProductSelector } from '../store/selector';
-import { TrendingApiActions } from '../store/action';
+import {
+  TrendingProductSelector,
+  AllProductsSelector,
+} from '../store/selector';
+import { AllProductsApiActions, TrendingApiActions } from '../store/action';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -42,22 +45,22 @@ export class ProductPagingComponent implements OnInit {
     //   total: this.total,
     // });
     this.productPaging$ = this.store.pipe(
-      select(TrendingProductSelector.selectProductWithPaging)
+      select(AllProductsSelector.selectAllProductsWithPaging)
     );
     this.hasNext$ = this.store.pipe(
-      select(TrendingProductSelector.selectPagingInfo),
+      select(AllProductsSelector.selectPagingInfo),
       map((info) => info.hasNext)
     );
 
     this.hasPrevious$ = this.store.pipe(
-      select(TrendingProductSelector.selectPagingInfo),
+      select(AllProductsSelector.selectPagingInfo),
       map((info) => info.hasPrevious)
     );
   }
 
   ngOnInit(): void {
     this.store.dispatch(
-      TrendingApiActions.loadAllTrending({ start: 0, size: 10, order: 'id' })
+      AllProductsApiActions.loadAllProducts({ start: 0, size: 10, order: 'id' })
     );
   }
 }

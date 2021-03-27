@@ -77,7 +77,7 @@ export class ProductServiceMock extends ProductServiceApi {
       currentList: currentList,
       size: size,
       start: start,
-      total: 500,
+      total: 50,
     });
   }
 
