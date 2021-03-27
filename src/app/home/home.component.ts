@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { Product } from '../core/model/product.model';
+import { TrendingPageActions } from './store/action';
+import { TrendingProductSelector } from './store/selector';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +18,7 @@ export class HomeComponent implements OnInit {
   popularList: Product[] = [];
   recentList: Product[] = [];
 
-  constructor() {
+  constructor(private store: Store) {
     const defautItem = {
       id: -1,
       name: 'default',
@@ -30,10 +33,14 @@ export class HomeComponent implements OnInit {
       this.popularList.push(defautItem);
       this.recentList.push(defautItem);
     }
-    this.trendingList$ = of(this.trendingList);
+    this.trendingList$ = this.store.pipe(
+      select(TrendingProductSelector.selectAllTrendingProducts)
+    );
     this.popularList$ = of(this.popularList);
     this.recentList$ = of(this.recentList);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(TrendingPageActions.loadTrendingPages());
+  }
 }
