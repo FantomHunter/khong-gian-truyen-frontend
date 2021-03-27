@@ -43,4 +43,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(TrendingPageActions.loadTrendingPages());
   }
+
+  onProductSelected(id: number): void {
+    console.log(id);
+    this.store.dispatch(TrendingPageActions.showTrendingDetails({id}));
+  }
 }

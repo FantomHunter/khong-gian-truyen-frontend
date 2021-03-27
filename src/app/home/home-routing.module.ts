@@ -14,6 +14,10 @@ const routes: Routes = [
     path: 'all',
     component: ProductAllComponent,
   },
+  {
+    path: ':id',
+    component: ProductDetailsComponent,
+  },
 ];
 
 @NgModule({

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
-import { ProductDetail } from 'src/app/core/model/product-details.model';
 import { Comment } from 'src/app/core/model/comment.model';
+import { ProductDetail } from 'src/app/core/model/product-details.model';
 import { Product } from 'src/app/core/model/product.model';
+import { DetailsPageActions } from '../store/action';
+import { DetailProductSelector } from '../store/selector';
 
 @Component({
   selector: 'app-product-details',
@@ -33,7 +36,7 @@ export class ProductDetailsComponent implements OnInit {
     rating: 4.5,
   };
 
-  constructor() {
+  constructor(private store: Store, private route: ActivatedRoute) {
     const defautItem = {
       id: -1,
       name: 'default',
@@ -56,8 +59,18 @@ export class ProductDetailsComponent implements OnInit {
     }
     this.relatedList$ = of(this.relatedList);
     this.commentList$ = of(this.commentList);
-    this.currentProductDetails$ = of(this.currentProductDetails).pipe(delay(1000));
+    // this.currentProductDetails$ = of(this.currentProductDetails).pipe(
+    //   delay(1000)
+    // );
+    this.currentProductDetails$ = this.store.select(
+      DetailProductSelector.selectDetailsProduct
+    );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const productId = this.route.snapshot.paramMap.get('id');
+    this.store.dispatch(
+      DetailsPageActions.loadDetailsPages({ id: Number(productId) })
+    );
+  }
 }

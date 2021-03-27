@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Product } from 'src/app/core/model/product.model';
 
 @Component({
@@ -17,7 +17,13 @@ export class ProductComponent implements OnInit {
     imageUrl: 'https://source.unsplash.com/1600x900/?product',
   };
 
+  @Output() productSelected = new EventEmitter<number>();
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  onProductSelected(id: number): void {
+    this.productSelected.emit(id);
+  }
 }

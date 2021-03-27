@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { ProductDetail } from '../../model/product-details.model';
 import { Product } from '../../model/product.model';
 import { ProductServiceApi } from '../product.service.api';
 
@@ -22,11 +23,35 @@ export class ProductServiceMock extends ProductServiceApi {
     for (let i = 0; i < size; i++) {
       trendingList.push({
         ...defautItem,
-        id: i + 1,
-        name: 'trending defaut ' + i,
+        id: i,
+        name: 'trending defaut ' + (i + 1),
       });
     }
     return of(trendingList).pipe(delay(1200));
+  }
+
+  getProductDetail(id: number): Observable<ProductDetail> {
+    if(isNaN(id)){
+      return throwError('id not exist');
+    }
+    const currentProductDetails: ProductDetail = {
+      id: id,
+      name: 'Product Details from Mock service',
+      description: 'This is description',
+      author: 'Jackson',
+      imageUrl: 'https://source.unsplash.com/1600x900/?product',
+      nbComment: 10,
+      nbLike: 30,
+      nbView: 30,
+      publishTime: new Date(),
+      categoryList: ['Test', 'Action', 'Fantasy'],
+      quality: 'Convert',
+      status: 'Complete',
+      length: 500,
+      rating: 4.5,
+    };
+
+    return of(currentProductDetails).pipe(delay(1200));
   }
 
   constructor() {
