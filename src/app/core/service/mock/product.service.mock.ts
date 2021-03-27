@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { ProductDetail } from '../../model/product-details.model';
+import { ProductPaging } from '../../model/product-paging.model';
 import { Product } from '../../model/product.model';
 import { ProductServiceApi } from '../product.service.api';
 
@@ -31,7 +32,7 @@ export class ProductServiceMock extends ProductServiceApi {
   }
 
   getProductDetail(id: number): Observable<ProductDetail> {
-    if(isNaN(id)){
+    if (isNaN(id)) {
       return throwError('id not exist');
     }
     const currentProductDetails: ProductDetail = {
@@ -52,6 +53,32 @@ export class ProductServiceMock extends ProductServiceApi {
     };
 
     return of(currentProductDetails).pipe(delay(1200));
+  }
+
+  getAllProductWithPaging(
+    start: number,
+    size: number,
+    order: string
+  ): Observable<ProductPaging> {
+    const defautItem = {
+      id: -1,
+      name: 'default paging mock',
+      status: 'comming',
+      categoryList: ['Action', 'Movie'],
+      nbComment: 30,
+      nbView: 300,
+      imageUrl: 'https://source.unsplash.com/1600x900/?product',
+    };
+    let currentList = [];
+    for (let i = start; i < start + size; i++) {
+      currentList.push({ ...defautItem, id: i });
+    }
+    return of({
+      currentList: currentList,
+      size: size,
+      start: start,
+      total: 500,
+    });
   }
 
   constructor() {

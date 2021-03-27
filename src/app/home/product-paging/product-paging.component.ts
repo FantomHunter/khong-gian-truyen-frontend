@@ -2,6 +2,10 @@ import { Observable, of } from 'rxjs';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Product } from 'src/app/core/model/product.model';
 import { ProductPaging } from 'src/app/core/model/product-paging.model';
+import { select, Store } from '@ngrx/store';
+import { TrendingProductSelector } from '../store/selector';
+import { TrendingApiActions } from '../store/action';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-paging',
@@ -18,7 +22,7 @@ export class ProductPagingComponent implements OnInit {
   hasNext$ = of(true);
   hasPrevious$ = of(false);
 
-  constructor() {
+  constructor(private store: Store) {
     const defautItem = {
       id: -1,
       name: 'default paging',
@@ -31,13 +35,29 @@ export class ProductPagingComponent implements OnInit {
     for (let i = 0; i < 20; i++) {
       this.currentList.push(defautItem);
     }
-    this.productPaging$ = of({
-      currentList: this.currentList,
-      size: this.size,
-      start: this.page,
-      total: this.total,
-    });
+    // this.productPaging$ = of({
+    //   currentList: this.currentList,
+    //   size: this.size,
+    //   start: this.page,
+    //   total: this.total,
+    // });
+    this.productPaging$ = this.store.pipe(
+      select(TrendingProductSelector.selectProductWithPaging)
+    );
+    this.hasNext$ = this.store.pipe(
+      select(TrendingProductSelector.selectPagingInfo),
+      map((info) => info.hasNext)
+    );
+
+    this.hasPrevious$ = this.store.pipe(
+      select(TrendingProductSelector.selectPagingInfo),
+      map((info) => info.hasPrevious)
+    );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(
+      TrendingApiActions.loadAllTrending({ start: 0, size: 10, order: 'id' })
+    );
+  }
 }

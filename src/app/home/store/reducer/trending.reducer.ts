@@ -1,12 +1,16 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { Product } from 'src/app/core/model/product.model';
-import { TrendingApiActions, TrendingPageActions } from '../action';
+import { TrendingApiActions } from '../action';
 
 export const trendingFeatureKey = 'trending-product';
 
 export interface State extends EntityState<Product> {
-  selectedProductId: number | null;
+  size: number;
+  start: number;
+  total: number;
+  order: string;
+  page: number;
 }
 
 export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
@@ -14,15 +18,28 @@ export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
 });
 
 export const initialState: State = adapter.getInitialState({
-  selectedProductId: null,
+  size: 5,
+  start: 0,
+  total: 50,
+  page: 1,
+  order: 'id',
 });
 
 export const reducer = createReducer(
   initialState,
   on(TrendingApiActions.loadTrendingsSuccess, (state, { products }) =>
-    adapter.addMany(products, state)
+    adapter.setAll(products, state)
   ),
-  on(TrendingApiActions.loadTrendingsFailure, (state, action) => state)
+  on(TrendingApiActions.loadTrendingsFailure, (state, action) => initialState),
+
+  on(TrendingApiActions.loadAllTrendingsSuccess, (state, { productsPaging }) =>
+    adapter.setAll(productsPaging.currentList, {
+      ...state,
+      size: productsPaging.size,
+      start: productsPaging.start,
+      total: productsPaging.total,
+    })
+  )
 );
 
 export const {

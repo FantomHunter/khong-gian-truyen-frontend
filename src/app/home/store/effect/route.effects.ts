@@ -17,5 +17,16 @@ export class RouteEffects {
       ),
     { dispatch: false }
   );
+
+  showAllProduct$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TrendingPageActions.showAllTrending),
+        tap(() => {
+          this.router.navigate(['/all']);
+        })
+      ),
+    { dispatch: false }
+  );
   constructor(private actions$: Actions, private router: Router) {}
 }

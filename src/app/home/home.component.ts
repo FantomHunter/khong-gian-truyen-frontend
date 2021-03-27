@@ -45,7 +45,10 @@ export class HomeComponent implements OnInit {
   }
 
   onProductSelected(id: number): void {
-    console.log(id);
-    this.store.dispatch(TrendingPageActions.showTrendingDetails({id}));
+    this.store.dispatch(TrendingPageActions.showTrendingDetails({ id }));
+  }
+
+  onShowAllProduct(): void {
+    this.store.dispatch(TrendingPageActions.showAllTrending());
   }
 }

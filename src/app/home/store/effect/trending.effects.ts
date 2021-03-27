@@ -12,9 +12,27 @@ export class TrendingEffects {
       ofType(TrendingPageActions.loadTrendingPages),
       concatMap(() =>
         this.productServiceApi.getLimitTrendingProduct(5).pipe(
-          map((products) => TrendingApiActions.loadTrendingsSuccess({ products })),
+          map((products) =>
+            TrendingApiActions.loadTrendingsSuccess({ products })
+          ),
           catchError((error) =>
             of(TrendingApiActions.loadTrendingsFailure({ error }))
+          )
+        )
+      )
+    );
+  });
+
+  loadAllTrendings$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TrendingApiActions.loadAllTrending),
+      concatMap(({ start, size, order }) =>
+        this.productServiceApi.getAllProductWithPaging(start, size, order).pipe(
+          map((productsPaging) =>
+            TrendingApiActions.loadAllTrendingsSuccess({ productsPaging })
+          ),
+          catchError((error) =>
+            of(TrendingApiActions.loadAllTrendingsFailure({ error }))
           )
         )
       )
