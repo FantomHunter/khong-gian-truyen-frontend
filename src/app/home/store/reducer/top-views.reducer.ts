@@ -1,9 +1,9 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import { Product } from 'src/app/core/model/product.model';
-import { TrendingApiActions } from '../action';
+import { TopViewsApiActions } from '../action';
 
-export const trendingFeatureKey = 'trending-product';
+export const topViewsFeatureKey = 'topViews';
 
 export interface State extends EntityState<Product> {}
 
@@ -15,10 +15,13 @@ export const initialState: State = adapter.getInitialState({});
 
 export const reducer = createReducer(
   initialState,
-  on(TrendingApiActions.loadTrendingsSuccess, (state, { products }) =>
+  on(TopViewsApiActions.loadTopViewsApisSuccess, (state, { products }) =>
     adapter.setAll(products, state)
   ),
-  on(TrendingApiActions.loadTrendingsFailure, (state, action) => initialState)
+  on(
+    TopViewsApiActions.loadTopViewsApisFailure,
+    (state, action) => initialState
+  )
 );
 
 export const {

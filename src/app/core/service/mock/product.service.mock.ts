@@ -84,6 +84,28 @@ export class ProductServiceMock extends ProductServiceApi {
     });
   }
 
+  getTopViewsProduct(size: number): Observable<Product[]> {
+    console.log('get top views product with size: ', size);
+    let sideBarViewList: Product[] = [];
+
+    const defautItem = {
+      id: -1,
+      name: 'default',
+      status: 'comming',
+      categoryList: ['Action', 'Movie'],
+      nbComment: 30,
+      nbView: 300,
+      imageUrl: 'https://source.unsplash.com/1600x900/?product',
+    };
+    for (let i = 0; i < size; i++) {
+      sideBarViewList.push({
+        ...defautItem,
+        id: i,
+        name: 'sidebar view product mock name',
+      });
+    }
+    return of(sideBarViewList);
+  }
   constructor() {
     super();
   }

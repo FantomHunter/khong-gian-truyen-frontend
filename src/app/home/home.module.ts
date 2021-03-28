@@ -19,6 +19,8 @@ import { RouteEffects } from './store/effect/route.effects';
 import * as fromDetails from './store/reducer/details.reducer';
 import { DetailsEffects } from './store/effect/details.effects';
 import * as fromAllProduct from './store/reducer/all-product.reducer';
+import { TopViewsEffects } from './store/effect/top-views.effects';
+import * as fromTopViews from './store/reducer/top-views.reducer';
 
 @NgModule({
   declarations: [
@@ -36,9 +38,10 @@ import * as fromAllProduct from './store/reducer/all-product.reducer';
       fromTrending.trendingFeatureKey,
       fromTrending.reducer
     ),
-    EffectsModule.forFeature([TrendingEffects, RouteEffects, DetailsEffects]),
+    EffectsModule.forFeature([TrendingEffects, RouteEffects, DetailsEffects, TopViewsEffects]),
     StoreModule.forFeature(fromDetails.detailsFeatureKey, fromDetails.reducer),
     StoreModule.forFeature(fromAllProduct.allProductFeatureKey, fromAllProduct.reducer),
+    StoreModule.forFeature(fromTopViews.topViewsFeatureKey, fromTopViews.reducer),
   ],
   providers: [
     {

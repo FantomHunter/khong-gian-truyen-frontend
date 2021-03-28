@@ -11,4 +11,5 @@ export abstract class ProductServiceApi {
     size: number,
     order: string
   ): Observable<ProductPaging>;
+  abstract getTopViewsProduct(size: number): Observable<Product[]>;
 }
