@@ -21,6 +21,8 @@ import { DetailsEffects } from './store/effect/details.effects';
 import * as fromAllProduct from './store/reducer/all-product.reducer';
 import { TopViewsEffects } from './store/effect/top-views.effects';
 import * as fromTopViews from './store/reducer/top-views.reducer';
+import { NewCommentEffects } from './store/effect/new-comment.effects';
+import * as fromNewComment from './store/reducer/new-comment.reducer';
 
 @NgModule({
   declarations: [
@@ -38,10 +40,11 @@ import * as fromTopViews from './store/reducer/top-views.reducer';
       fromTrending.trendingFeatureKey,
       fromTrending.reducer
     ),
-    EffectsModule.forFeature([TrendingEffects, RouteEffects, DetailsEffects, TopViewsEffects]),
+    EffectsModule.forFeature([TrendingEffects, RouteEffects, DetailsEffects, TopViewsEffects, NewCommentEffects]),
     StoreModule.forFeature(fromDetails.detailsFeatureKey, fromDetails.reducer),
     StoreModule.forFeature(fromAllProduct.allProductFeatureKey, fromAllProduct.reducer),
     StoreModule.forFeature(fromTopViews.topViewsFeatureKey, fromTopViews.reducer),
+    StoreModule.forFeature(fromNewComment.newCommentFeatureKey, fromNewComment.reducer),
   ],
   providers: [
     {

@@ -111,6 +111,30 @@ export class ProductServiceMock extends ProductServiceApi {
     }
     return of(sideBarViewList);
   }
+
+  getNewCommentProducts(size: number): Observable<Product[]> {
+    console.log('get new comments products list with size: ', size);
+
+    let sideBarCommentList: Product[] = [];
+    const defautItem = {
+      id: -1,
+      name: 'default',
+      status: 'comming',
+      categoryList: ['Action', 'Movie'],
+      nbComment: 30,
+      nbView: 300,
+      imageUrl: 'https://source.unsplash.com/1600x900/?product',
+    };
+    for (let i = 0; i < size; i++) {
+      sideBarCommentList.push({
+        ...defautItem,
+        id: i,
+        name: 'sidebar comment product mock name',
+      });
+    }
+    return of(sideBarCommentList);
+  }
+
   constructor() {
     super();
   }

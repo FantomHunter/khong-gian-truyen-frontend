@@ -26,24 +26,6 @@ export class ProductPagingComponent implements OnInit {
   hasPrevious$ = of(false);
 
   constructor(private store: Store) {
-    const defautItem = {
-      id: -1,
-      name: 'default paging',
-      status: 'comming',
-      categoryList: ['Action', 'Movie'],
-      nbComment: 30,
-      nbView: 300,
-      imageUrl: 'https://source.unsplash.com/1600x900/?product',
-    };
-    for (let i = 0; i < 20; i++) {
-      this.currentList.push(defautItem);
-    }
-    // this.productPaging$ = of({
-    //   currentList: this.currentList,
-    //   size: this.size,
-    //   start: this.page,
-    //   total: this.total,
-    // });
     this.productPaging$ = this.store.pipe(
       select(AllProductsSelector.selectAllProductsWithPaging)
     );

@@ -16,4 +16,5 @@ export abstract class ProductServiceApi {
     size: number,
     filterType: TopViewsFilter
   ): Observable<Product[]>;
+  abstract getNewCommentProducts(size: number): Observable<Product[]>;
 }
