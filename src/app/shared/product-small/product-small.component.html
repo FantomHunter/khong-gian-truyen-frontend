@@ -8,7 +8,7 @@
         <ul *ngIf="product.categoryList.length > 0">
             <li *ngFor="let category of product.categoryList">{{ category }}</li>
         </ul>
-        <h5><a href="#">{{ product.name }}</a></h5>
+        <h5><a class="btn" (click)="onProductSelected(product.id)">{{ product.name }}</a></h5>
         <span><i class="fa fa-eye"></i> {{ product.nbView}} Views</span>
     </div>
 </div>

@@ -11,6 +11,7 @@ import { ProductServiceApi } from '../product.service.api';
 })
 export class ProductServiceMock extends ProductServiceApi {
   getLimitTrendingProduct(size: number): Observable<Product[]> {
+    console.log('get limit trending product, size: ', size);
     let trendingList: Product[] = [];
     const defautItem = {
       id: -1,
@@ -32,6 +33,7 @@ export class ProductServiceMock extends ProductServiceApi {
   }
 
   getProductDetail(id: number): Observable<ProductDetail> {
+    console.log('get product deail for id: ', id);
     if (isNaN(id)) {
       return throwError('id not exist');
     }
@@ -60,6 +62,7 @@ export class ProductServiceMock extends ProductServiceApi {
     size: number,
     order: string
   ): Observable<ProductPaging> {
+    console.log('get all product with paging');
     const defautItem = {
       id: -1,
       name: 'default paging mock',

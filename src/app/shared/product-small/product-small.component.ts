@@ -4,7 +4,9 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Product } from 'src/app/core/model/product.model';
+import { ProductItemAction } from 'src/app/home/store/action';
 
 @Component({
   selector: 'app-product-small',
@@ -22,7 +24,11 @@ export class ProductSmallComponent implements OnInit {
     nbView: 300,
     imageUrl: 'https://source.unsplash.com/1600x900/?product',
   };
-  constructor() {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {}
+
+  onProductSelected(id: number): void {
+    this.store.dispatch(ProductItemAction.showProductDetails({ id }));
+  }
 }

@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Product } from 'src/app/core/model/product.model';
+import { ProductItemAction } from 'src/app/home/store/action';
 
 @Component({
   selector: 'app-product',
@@ -17,13 +19,11 @@ export class ProductComponent implements OnInit {
     imageUrl: 'https://source.unsplash.com/1600x900/?product',
   };
 
-  @Output() productSelected = new EventEmitter<number>();
-
-  constructor() {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {}
 
   onProductSelected(id: number): void {
-    this.productSelected.emit(id);
+    this.store.dispatch(ProductItemAction.showProductDetails({ id }));
   }
 }
