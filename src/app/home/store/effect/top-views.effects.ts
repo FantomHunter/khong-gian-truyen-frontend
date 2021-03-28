@@ -7,11 +7,11 @@ import { TopViewsApiActions } from '../action';
 
 @Injectable()
 export class TopViewsEffects {
-  loadTrendings$ = createEffect(() => {
+  loadTopViews$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(TopViewsApiActions.loadTopViewsApis),
-      concatMap(({ size }) =>
-        this.productServiceApi.getTopViewsProduct(size).pipe(
+      concatMap(({ size, filterType }) =>
+        this.productServiceApi.getTopViewsProduct(size, filterType).pipe(
           map((products) =>
             TopViewsApiActions.loadTopViewsApisSuccess({ products })
           ),

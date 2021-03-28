@@ -4,6 +4,7 @@ import { delay } from 'rxjs/operators';
 import { ProductDetail } from '../../model/product-details.model';
 import { ProductPaging } from '../../model/product-paging.model';
 import { Product } from '../../model/product.model';
+import { TopViewsFilter } from '../../model/top-views-filter.enum.model';
 import { ProductServiceApi } from '../product.service.api';
 
 @Injectable({
@@ -84,8 +85,12 @@ export class ProductServiceMock extends ProductServiceApi {
     });
   }
 
-  getTopViewsProduct(size: number): Observable<Product[]> {
+  getTopViewsProduct(
+    size: number,
+    filterType: TopViewsFilter
+  ): Observable<Product[]> {
     console.log('get top views product with size: ', size);
+    console.log('get top views product with type: ', filterType);
     let sideBarViewList: Product[] = [];
 
     const defautItem = {

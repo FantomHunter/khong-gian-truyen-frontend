@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { Product } from 'src/app/core/model/product.model';
+import { TopViewsFilter } from 'src/app/core/model/top-views-filter.enum.model';
 import { TopViewsProductsSelector } from 'src/app/home/store/selector';
 import { TopViewsApiActions } from '../store/action';
 
@@ -14,6 +15,8 @@ import { TopViewsApiActions } from '../store/action';
 export class ProductSidebarComponent implements OnInit {
   sideBarViewList$: Observable<Product[]>;
   sideBarCommentList$: Observable<Product[]>;
+  public TopViewsFilter = TopViewsFilter;
+  topViewsFilter$: Observable<TopViewsFilter>;
   sideBarViewList: Product[] = [];
   sideBarCommentList: Product[] = [];
   constructor(private store: Store) {
@@ -41,9 +44,26 @@ export class ProductSidebarComponent implements OnInit {
     this.sideBarViewList$ = this.store.pipe(
       select(TopViewsProductsSelector.selectTopViewsProducts)
     );
+    // this.topViewsFilter$ = of(TopViewsFilter.MONTH);
+    this.topViewsFilter$ = this.store.pipe(
+      select(TopViewsProductsSelector.selectTopViewsFilterTypeProducts)
+    );
   }
 
   ngOnInit(): void {
-    this.store.dispatch(TopViewsApiActions.loadTopViewsApis({ size: 5 }));
+    this.store.dispatch(
+      TopViewsApiActions.loadTopViewsApis({
+        size: 5,
+        filterType: TopViewsFilter.DAY,
+      })
+    );
+  }
+  onChangeFilter(filterType: TopViewsFilter) {
+    this.store.dispatch(
+      TopViewsApiActions.loadTopViewsApis({
+        size: 5,
+        filterType: filterType,
+      })
+    );
   }
 }

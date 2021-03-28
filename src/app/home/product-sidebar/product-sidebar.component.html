@@ -4,10 +4,14 @@
             <h5>Top Views</h5>
         </div>
         <ul class="filter__controls">
-            <li class="active" data-filter="*">Day</li>
-            <li data-filter=".week">Week</li>
-            <li data-filter=".month">Month</li>
-            <li data-filter=".years">Years</li>
+            <li [ngClass]="{active: (topViewsFilter$ | async) === TopViewsFilter.DAY }"
+                (click)="onChangeFilter(TopViewsFilter.DAY)">Day</li>
+            <li [ngClass]="{active: (topViewsFilter$ | async) === TopViewsFilter.WEEK}"
+                (click)="onChangeFilter(TopViewsFilter.WEEK)">Week</li>
+            <li [ngClass]="{active: (topViewsFilter$ | async) === TopViewsFilter.MONTH}"
+                (click)="onChangeFilter(TopViewsFilter.MONTH)">Month</li>
+            <li [ngClass]="{active: (topViewsFilter$ | async) === TopViewsFilter.YEAR}"
+                (click)="onChangeFilter(TopViewsFilter.YEAR)">Years</li>
         </ul>
         <div class="filter__gallery">
             <app-product-medium *ngFor="let product of sideBarViewList$ | async " [product]="product">

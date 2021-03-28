@@ -9,3 +9,8 @@ export const selectTopViewsProducts = createSelector(
   selectTopViewsProductsState,
   TopViewsReducer.selectAll
 );
+
+export const selectTopViewsFilterTypeProducts = createSelector(
+  selectTopViewsProductsState,
+  (state) => state.filterType
+);
