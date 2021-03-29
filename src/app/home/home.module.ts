@@ -1,28 +1,27 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { HomeRoutingModule } from './home-routing.module';
-import { HomeComponent } from './home.component';
-import { SharedModule } from '../shared/shared.module';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { ProductAllComponent } from './product-all/product-all.component';
-import { ProductSidebarComponent } from './product-sidebar/product-sidebar.component';
-import { ProductPagingComponent } from './product-paging/product-paging.component';
-import { ProductServiceApi } from '../core/service/product.service.api';
+import { NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { environment } from 'src/environments/environment';
 import { ProductServiceMock } from '../core/service/mock/product.service.mock';
-import { StoreModule } from '@ngrx/store';
-import * as fromTrending from './store/reducer/trending.reducer';
-import { EffectsModule } from '@ngrx/effects';
-import { TrendingEffects } from './store/effect/trending.effects';
-import { RouteEffects } from './store/effect/route.effects';
-import * as fromDetails from './store/reducer/details.reducer';
+import { ProductServiceApi } from '../core/service/product.service.api';
+import { SharedModule } from '../shared/shared.module';
+import { HomeRoutingModule } from './home-routing.module';
+import { HomeComponent } from './home.component';
+import { ProductAllComponent } from './product-all/product-all.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductPagingComponent } from './product-paging/product-paging.component';
+import { ProductSidebarComponent } from './product-sidebar/product-sidebar.component';
 import { DetailsEffects } from './store/effect/details.effects';
-import * as fromAllProduct from './store/reducer/all-product.reducer';
-import { TopViewsEffects } from './store/effect/top-views.effects';
-import * as fromTopViews from './store/reducer/top-views.reducer';
 import { NewCommentEffects } from './store/effect/new-comment.effects';
+import { RouteEffects } from './store/effect/route.effects';
+import { TopViewsEffects } from './store/effect/top-views.effects';
+import { TrendingEffects } from './store/effect/trending.effects';
+import * as fromAllProduct from './store/reducer/all-product.reducer';
+import * as fromDetails from './store/reducer/details.reducer';
 import * as fromNewComment from './store/reducer/new-comment.reducer';
+import * as fromTopViews from './store/reducer/top-views.reducer';
+import * as fromTrending from './store/reducer/trending.reducer';
 
 @NgModule({
   declarations: [
@@ -40,11 +39,26 @@ import * as fromNewComment from './store/reducer/new-comment.reducer';
       fromTrending.trendingFeatureKey,
       fromTrending.reducer
     ),
-    EffectsModule.forFeature([TrendingEffects, RouteEffects, DetailsEffects, TopViewsEffects, NewCommentEffects]),
+    EffectsModule.forFeature([
+      TrendingEffects,
+      RouteEffects,
+      DetailsEffects,
+      TopViewsEffects,
+      NewCommentEffects,
+    ]),
     StoreModule.forFeature(fromDetails.detailsFeatureKey, fromDetails.reducer),
-    StoreModule.forFeature(fromAllProduct.allProductFeatureKey, fromAllProduct.reducer),
-    StoreModule.forFeature(fromTopViews.topViewsFeatureKey, fromTopViews.reducer),
-    StoreModule.forFeature(fromNewComment.newCommentFeatureKey, fromNewComment.reducer),
+    StoreModule.forFeature(
+      fromAllProduct.allProductFeatureKey,
+      fromAllProduct.reducer
+    ),
+    StoreModule.forFeature(
+      fromTopViews.topViewsFeatureKey,
+      fromTopViews.reducer
+    ),
+    StoreModule.forFeature(
+      fromNewComment.newCommentFeatureKey,
+      fromNewComment.reducer
+    ),
   ],
   providers: [
     {

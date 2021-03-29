@@ -14,17 +14,19 @@ export const selectAllProducts = createSelector(
 export const selectPagingInfo = createSelector(
   selectAllProductsState,
   (state: AllProductReducer.State) => {
-    let hasPrevious = state.start > state.size ? true : false;
+    let hasPrevious = state.start >= state.size ? true : false;
     let hasNext = state.start + state.size < state.total ? true : false;
-    return {
+    let page = state.start / state.size + 1;
+    const pagingInfo: AllProductPagingInfo = {
       size: state.size,
       start: state.start,
       total: state.total,
       order: state.order,
-      page: state.page,
+      page: page,
       hasPrevious: hasPrevious,
       hasNext: hasNext,
     };
+    return pagingInfo;
   }
 );
 export const selectAllProductsWithPaging = createSelector(
@@ -40,3 +42,13 @@ export const selectAllProductsWithPaging = createSelector(
     return result;
   }
 );
+
+export interface AllProductPagingInfo {
+  size: number;
+  start: number;
+  total: number;
+  order: string;
+  page: number;
+  hasPrevious: boolean;
+  hasNext: boolean;
+}

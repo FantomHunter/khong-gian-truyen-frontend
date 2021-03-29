@@ -63,7 +63,14 @@ export class ProductServiceMock extends ProductServiceApi {
     size: number,
     order: string
   ): Observable<ProductPaging> {
-    console.log('get all product with paging');
+    console.log(
+      'get all product with paging start at: ',
+      start,
+      ', size: ',
+      size,
+      ', order by: ',
+      order
+    );
     const defautItem = {
       id: -1,
       name: 'default paging mock',

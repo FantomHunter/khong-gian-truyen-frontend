@@ -10,9 +10,9 @@
                 <div class="product__page__filter">
                     <p>Order by:</p>
                     <select>
-                        <option value="">A-Z</option>
-                        <option value="">1-10</option>
-                        <option value="">10-50</option>
+                        <option value="">Time</option>
+                        <option value="">Name</option>
+                        <option value="">Popular</option>
                     </select>
                 </div>
             </div>
@@ -25,11 +25,11 @@
     </div>
 </div>
 <div class="product__pagination">
-    <a href="#" *ngIf="hasPrevious$|async"><i class="fa fa-angle-double-left"></i></a>
-    <a href="#" class="current-page">1</a>
-    <!-- <a href="#">2</a>
-    <a href="#">3</a>
-    <a href="#">4</a>
-    <a href="#">5</a> -->
-    <a href="#" *ngIf="hasNext$|async"><i class="fa fa-angle-double-right"></i></a>
+    <ng-container *ngIf="(pagingInfor$ | async) as pagingInfor">
+        <a *ngIf="pagingInfor.hasPrevious" class="btn" (click)="onReloadPaging(pagingInfor.start - pagingInfor.size)">
+            <i class="fa fa-angle-double-left"></i></a>
+        <a href="#" class="current-page">{{ pagingInfor.page }}</a>
+        <a *ngIf="pagingInfor.hasNext" class="btn" (click)="onReloadPaging(pagingInfor.start + pagingInfor.size)">
+            <i class="fa fa-angle-double-right"></i></a>
+    </ng-container>
 </div>

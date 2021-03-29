@@ -1,14 +1,11 @@
-import { Observable, of } from 'rxjs';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Product } from 'src/app/core/model/product.model';
-import { ProductPaging } from 'src/app/core/model/product-paging.model';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import {
-  TrendingProductSelector,
-  AllProductsSelector,
-} from '../store/selector';
-import { AllProductsApiActions, TrendingApiActions } from '../store/action';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ProductPaging } from 'src/app/core/model/product-paging.model';
+import { Product } from 'src/app/core/model/product.model';
+import { AllProductsApiActions } from '../store/action';
+import { AllProductsSelector } from '../store/selector';
 
 @Component({
   selector: 'app-product-paging',
@@ -19,24 +16,28 @@ import { map } from 'rxjs/operators';
 export class ProductPagingComponent implements OnInit {
   productPaging$: Observable<ProductPaging>;
   currentList: Product[] = [];
-  size = 20;
-  page = 1;
-  total = 200;
-  hasNext$ = of(true);
-  hasPrevious$ = of(false);
+  // size = 20;
+  // page = 1;
+  // total = 200;
+  // hasNext$ = of(true);
+  // hasPrevious$ = of(false);
+  pagingInfor$: Observable<AllProductsSelector.AllProductPagingInfo>;
 
   constructor(private store: Store) {
     this.productPaging$ = this.store.pipe(
       select(AllProductsSelector.selectAllProductsWithPaging)
     );
-    this.hasNext$ = this.store.pipe(
-      select(AllProductsSelector.selectPagingInfo),
-      map((info) => info.hasNext)
-    );
+    // this.hasNext$ = this.store.pipe(
+    //   select(AllProductsSelector.selectPagingInfo),
+    //   map((info) => info.hasNext)
+    // );
 
-    this.hasPrevious$ = this.store.pipe(
-      select(AllProductsSelector.selectPagingInfo),
-      map((info) => info.hasPrevious)
+    // this.hasPrevious$ = this.store.pipe(
+    //   select(AllProductsSelector.selectPagingInfo),
+    //   map((info) => info.hasPrevious)
+    // );
+    this.pagingInfor$ = this.store.pipe(
+      select(AllProductsSelector.selectPagingInfo)
     );
   }
 
@@ -44,5 +45,15 @@ export class ProductPagingComponent implements OnInit {
     this.store.dispatch(
       AllProductsApiActions.loadAllProducts({ start: 0, size: 10, order: 'id' })
     );
+  }
+
+  onReloadPaging(start: number | null): void {
+    console.log('load next page start at: ', start);
+
+    if (start != null) {
+      this.store.dispatch(
+        AllProductsApiActions.loadAllProducts({ start, size: 10, order: 'id' })
+      );
+    }
   }
 }

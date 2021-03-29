@@ -10,7 +10,6 @@ export interface State extends EntityState<Product> {
   start: number;
   total: number;
   order: string;
-  page: number;
 }
 
 export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
