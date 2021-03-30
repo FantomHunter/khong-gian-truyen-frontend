@@ -56,4 +56,15 @@ export class ProductPagingComponent implements OnInit {
       );
     }
   }
+
+  onChangeOrder(orderType: any): void {
+    console.log('orderType: ', orderType);
+    this.store.dispatch(
+      AllProductsApiActions.loadAllProducts({
+        start: 0,
+        size: 10,
+        order: orderType,
+      })
+    );
+  }
 }

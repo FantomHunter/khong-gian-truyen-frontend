@@ -2,5 +2,5 @@
     [ngStyle]="{'background-image': 'url(https://source.unsplash.com/1600x900/?product)'}">
     <div class="ep">{{ product.status }}</div>
     <div class="view"><i class="fa fa-eye"></i> {{ product.nbView }}</div>
-    <h5><a class="btn" (click)="onProductSelected(product.id)">{{ product.name }}</a></h5>
+    <h5><a class="btn text-left" (click)="onProductSelected(product.id)">{{ product.name }}</a></h5>
 </div>

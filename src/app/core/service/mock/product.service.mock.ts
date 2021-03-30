@@ -82,7 +82,17 @@ export class ProductServiceMock extends ProductServiceApi {
     };
     let currentList = [];
     for (let i = start; i < start + size; i++) {
-      currentList.push({ ...defautItem, id: i });
+      currentList.push({
+        ...defautItem,
+        id: i,
+        name:
+          'default paging mock ' +
+          i +
+          ', size: ' +
+          size +
+          ', order by: ' +
+          order,
+      });
     }
     return of({
       currentList: currentList,
@@ -113,7 +123,7 @@ export class ProductServiceMock extends ProductServiceApi {
       sideBarViewList.push({
         ...defautItem,
         id: i,
-        name: 'sidebar view product mock name',
+        name: 'sidebar view mock filter by ' + TopViewsFilter[filterType],
       });
     }
     return of(sideBarViewList);

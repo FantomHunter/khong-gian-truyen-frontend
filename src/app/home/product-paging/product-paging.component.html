@@ -9,11 +9,13 @@
             <div class="col-lg-4 col-md-4 col-sm-6">
                 <div class="product__page__filter">
                     <p>Order by:</p>
-                    <select>
-                        <option value="">Time</option>
-                        <option value="">Name</option>
-                        <option value="">Popular</option>
-                    </select>
+                    <ng-container *ngIf="(pagingInfor$ | async) as pagingInfor">
+                        <select #orderBox (change)="onChangeOrder(orderBox.value)">
+                            <option [value]="'id'" [selected]="pagingInfor.order=='id'">Time</option>
+                            <option [value]="'name'" [selected]="pagingInfor.order=='name'">Name</option>
+                            <option [value]="'popular'" [selected]="pagingInfor.order=='popular'">Popular</option>
+                        </select>
+                    </ng-container>
                 </div>
             </div>
         </div>
@@ -28,7 +30,7 @@
     <ng-container *ngIf="(pagingInfor$ | async) as pagingInfor">
         <a *ngIf="pagingInfor.hasPrevious" class="btn" (click)="onReloadPaging(pagingInfor.start - pagingInfor.size)">
             <i class="fa fa-angle-double-left"></i></a>
-        <a href="#" class="current-page">{{ pagingInfor.page }}</a>
+        <a class="current-page">{{ pagingInfor.page }}</a>
         <a *ngIf="pagingInfor.hasNext" class="btn" (click)="onReloadPaging(pagingInfor.start + pagingInfor.size)">
             <i class="fa fa-angle-double-right"></i></a>
     </ng-container>
