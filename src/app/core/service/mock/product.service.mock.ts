@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { Comment } from '../../model/comment.model';
 import { ProductDetail } from '../../model/product-details.model';
 import { ProductPaging } from '../../model/product-paging.model';
 import { Product } from '../../model/product.model';
@@ -53,6 +54,24 @@ export class ProductServiceMock extends ProductServiceApi {
       status: 'Complete',
       length: 500,
       rating: 4.5,
+      downloadSource: [
+        {
+          source: 'prc',
+          url: 'https://hackerthemes.com/bootstrap-cheatsheet/#text-left',
+        },
+        {
+          source: 'epub',
+          url: 'https://hackerthemes.com/bootstrap-cheatsheet/#text-left',
+        },
+        {
+          source: 'pdf',
+          url: 'https://hackerthemes.com/bootstrap-cheatsheet/#text-left',
+        },
+        {
+          source: 'mobi',
+          url: 'https://hackerthemes.com/bootstrap-cheatsheet/#text-left',
+        },
+      ],
     };
 
     return of(currentProductDetails).pipe(delay(1200));
@@ -150,6 +169,21 @@ export class ProductServiceMock extends ProductServiceApi {
       });
     }
     return of(sideBarCommentList);
+  }
+
+  getProductComments(size: number, productId: number): Observable<Comment[]> {
+    const defautComment: Comment = {
+      id: -1,
+      username: 'commenuser',
+      avatarUrl: 'https://source.unsplash.com/1600x900/?product',
+      content: 'this is the review content',
+      time: new Date(1609834043000),
+    };
+    let commentList = [];
+    for (let i = 0; i < size; i++) {
+      commentList.push({ ...defautComment, id: i });
+    }
+    return of(commentList).pipe(delay(2000));
   }
 
   constructor() {

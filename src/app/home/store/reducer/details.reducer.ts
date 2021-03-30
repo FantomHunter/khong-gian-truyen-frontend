@@ -1,4 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
+import { Comment } from 'src/app/core/model/comment.model';
 import { ProductDetail } from 'src/app/core/model/product-details.model';
 import { Product } from 'src/app/core/model/product.model';
 import { DetailsApiActions } from '../action';
@@ -7,6 +8,7 @@ export const detailsFeatureKey = 'details';
 
 export interface State {
   productDetails: ProductDetail;
+  comments: Comment[];
 }
 
 export const initialState: State = {
@@ -25,12 +27,22 @@ export const initialState: State = {
     status: 'Complete',
     length: 500,
     rating: 4.5,
+    downloadSource: [],
   },
+  comments: [],
 };
 
 export const reducer = createReducer(
   initialState,
   on(DetailsApiActions.loadDetailsApisSuccess, (state, { productDetail }) => ({
+    ...state,
     productDetails: productDetail,
-  }))
+  })),
+  on(
+    DetailsApiActions.loadProductCommentApisSuccess,
+    (state, { comments }) => ({
+      ...state,
+      comments,
+    })
+  )
 );

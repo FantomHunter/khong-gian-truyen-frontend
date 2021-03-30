@@ -48,8 +48,6 @@ export class ProductPagingComponent implements OnInit {
   }
 
   onReloadPaging(start: number | null): void {
-    console.log('load next page start at: ', start);
-
     if (start != null) {
       this.store.dispatch(
         AllProductsApiActions.loadAllProducts({ start, size: 10, order: 'id' })

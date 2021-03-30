@@ -34,6 +34,7 @@ export class ProductDetailsComponent implements OnInit {
     status: 'Complete',
     length: 500,
     rating: 4.5,
+    downloadSource: [],
   };
 
   constructor(private store: Store, private route: ActivatedRoute) {
@@ -58,12 +59,15 @@ export class ProductDetailsComponent implements OnInit {
       this.commentList.push(defautComment);
     }
     this.relatedList$ = of(this.relatedList);
-    this.commentList$ = of(this.commentList);
+    // this.commentList$ = of(this.commentList);
     // this.currentProductDetails$ = of(this.currentProductDetails).pipe(
     //   delay(1000)
     // );
     this.currentProductDetails$ = this.store.select(
       DetailProductSelector.selectDetailsProduct
+    );
+    this.commentList$ = this.store.select(
+      DetailProductSelector.selectCommentsProduct
     );
   }
 
@@ -71,6 +75,12 @@ export class ProductDetailsComponent implements OnInit {
     const productId = this.route.snapshot.paramMap.get('id');
     this.store.dispatch(
       DetailsPageActions.loadDetailsPages({ id: Number(productId) })
+    );
+    this.store.dispatch(
+      DetailsPageActions.loadProductComments({
+        size: 5,
+        productId: Number(productId),
+      })
     );
   }
 }

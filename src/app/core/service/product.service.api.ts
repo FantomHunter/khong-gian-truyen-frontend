@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { ProductDetail } from '../model/product-details.model';
 import { ProductPaging } from '../model/product-paging.model';
 import { Product } from '../model/product.model';
+import { Comment } from '../model/comment.model';
 import { TopViewsFilter } from '../model/top-views-filter.enum.model';
 
 export abstract class ProductServiceApi {
@@ -17,4 +18,8 @@ export abstract class ProductServiceApi {
     filterType: TopViewsFilter
   ): Observable<Product[]>;
   abstract getNewCommentProducts(size: number): Observable<Product[]>;
+  abstract getProductComments(
+    size: number,
+    productId: number
+  ): Observable<Comment[]>;
 }

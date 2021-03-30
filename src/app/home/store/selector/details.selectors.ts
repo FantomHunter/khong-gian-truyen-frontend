@@ -9,3 +9,8 @@ export const selectDetailsProduct = createSelector(
   selectDetailProductState,
   (state: DetailProductReducer.State) => state.productDetails
 );
+
+export const selectCommentsProduct = createSelector(
+  selectDetailProductState,
+  (state: DetailProductReducer.State) => state.comments
+);

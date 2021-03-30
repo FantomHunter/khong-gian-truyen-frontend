@@ -13,4 +13,9 @@ export interface ProductDetail {
   length: number;
   quality: string;
   author: string;
+  downloadSource: DownloadSource[];
+}
+export interface DownloadSource {
+  source: string;
+  url: string;
 }

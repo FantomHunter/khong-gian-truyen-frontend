@@ -10,9 +10,13 @@ export class DetailsEffects {
   loadProductDetail$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(DetailsPageActions.loadDetailsPages),
-      concatMap(({id}) =>
+      concatMap(({ id }) =>
         this.productServiceApi.getProductDetail(id).pipe(
-          map((productDetail) => DetailsApiActions.loadDetailsApisSuccess({ productDetail: productDetail })),
+          map((productDetail) =>
+            DetailsApiActions.loadDetailsApisSuccess({
+              productDetail: productDetail,
+            })
+          ),
           catchError((error) =>
             of(DetailsApiActions.loadDetailsApisFailure({ error }))
           )
@@ -20,6 +24,23 @@ export class DetailsEffects {
       )
     );
   });
+
+  loadProductComments$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(DetailsPageActions.loadProductComments),
+      concatMap(({ size, productId }) =>
+        this.productServiceApi.getProductComments(size, productId).pipe(
+          map((comments) =>
+            DetailsApiActions.loadProductCommentApisSuccess({ comments })
+          ),
+          catchError((error) =>
+            of(DetailsApiActions.loadProductCommentApisFailure({ error }))
+          )
+        )
+      )
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private productServiceApi: ProductServiceApi
