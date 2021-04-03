@@ -2,7 +2,7 @@ export interface User {
     id: string;
     name: string;
     token: string;
-    referesh: string;
+    refreshToken: string;
 }
 
 export interface Credential {

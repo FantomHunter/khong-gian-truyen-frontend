@@ -1,4 +1,5 @@
 import {
+  Action,
   ActionReducer,
   ActionReducerMap,
   createFeatureSelector,
@@ -6,11 +7,43 @@ import {
   MetaReducer,
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
+import { LoginStatusReducer } from '../auth/store/reducer';
+import { merge } from 'lodash';
+import { localStorageSync } from 'ngrx-store-localstorage';
+
+const INIT_ACTION = '@ngrx/store/init';
+const UPDATE_ACTION = '@ngrx/store/update-reducers';
 
 export interface AppState {}
 
-export const reducers: ActionReducerMap<AppState> = {};
+export const reducers: ActionReducerMap<AppState> = {
+  [LoginStatusReducer.loginStatusFeatureKey]: LoginStatusReducer.reducer,
+};
 
+const mergeReducer = (
+  state: AppState,
+  rehydratedState: AppState,
+  action: Action
+) => {
+  if (
+    (action.type === INIT_ACTION || action.type === UPDATE_ACTION) &&
+    rehydratedState
+  ) {
+    state = merge(state, rehydratedState);
+  }
+
+  return state;
+};
+
+function localStorageSyncReducer(
+  reducer: ActionReducer<AppState>
+): ActionReducer<AppState> {
+  return localStorageSync({
+    keys: [{ [LoginStatusReducer.loginStatusFeatureKey]: ['user'] }],
+    rehydrate: true,
+    mergeReducer,
+  })(reducer);
+}
 // console.log all actions
 export function logger(
   reducer: ActionReducer<AppState>
@@ -28,5 +61,5 @@ export function logger(
 }
 
 export const metaReducers: MetaReducer<AppState>[] = !environment.production
-  ? [logger]
-  : [];
+  ? [logger, localStorageSyncReducer]
+  : [localStorageSyncReducer];

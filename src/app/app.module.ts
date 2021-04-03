@@ -7,9 +7,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
+import { AuthenticationServiceApi } from './core/service/auth.service.api';
+import { AuthenticationServiceMock } from './core/service/mock/auth.service.mock';
 import { metaReducers, reducers } from './reducers';
 import { SharedModule } from './shared/shared.module';
-import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,7 +30,9 @@ import { AuthModule } from './auth/auth.module';
     StoreRouterConnectingModule.forRoot(),
     AuthModule,
   ],
-  providers: [],
+  providers: [
+    { provide: AuthenticationServiceApi, useClass: AuthenticationServiceMock },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
