@@ -12,7 +12,7 @@ export class RouteEffects {
         ofType(ProductItemAction.showProductDetails),
         tap(({ id }) => {
           console.log('show product details for id : ', id);
-          this.router.navigate(['/' + id]);
+          this.router.navigate(['/product/' + id]);
         })
       ),
     { dispatch: false }
