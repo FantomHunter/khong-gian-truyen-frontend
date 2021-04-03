@@ -4,6 +4,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,10 +29,16 @@ import { SharedModule } from './shared/shared.module';
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreRouterConnectingModule.forRoot(),
+    SweetAlert2Module.forRoot(),
     AuthModule,
   ],
   providers: [
-    { provide: AuthenticationServiceApi, useClass: AuthenticationServiceMock },
+    {
+      provide: AuthenticationServiceApi,
+      useClass: !environment.production
+        ? AuthenticationServiceMock
+        : AuthenticationServiceMock,
+    },
   ],
   bootstrap: [AppComponent],
 })

@@ -18,7 +18,7 @@ export class AuthenticationServiceMock extends AuthenticationServiceApi {
       name: 'User',
       token: 'alskdfjlwiuoejflskjd',
       refreshToken: 'refresh token',
-    }).pipe(delay(2000));
+    }).pipe(delay(3000));
   }
   constructor() {
     super();

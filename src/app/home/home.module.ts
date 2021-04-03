@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { environment } from 'src/environments/environment';
 import { ProductServiceMock } from '../core/service/mock/product.service.mock';
 import { ProductServiceApi } from '../core/service/product.service.api';
@@ -33,6 +35,8 @@ import * as fromTrending from './store/reducer/trending.reducer';
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule,
     HomeRoutingModule,
     StoreModule.forFeature(
@@ -59,6 +63,7 @@ import * as fromTrending from './store/reducer/trending.reducer';
       fromNewComment.newCommentFeatureKey,
       fromNewComment.reducer
     ),
+    SweetAlert2Module,
   ],
   providers: [
     {

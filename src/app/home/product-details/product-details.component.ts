@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
+import { LoginPageActions } from 'src/app/auth/store/action';
+import { AuthenticationStatusSelector } from 'src/app/auth/store/selector';
 import { Comment } from 'src/app/core/model/comment.model';
 import { ProductDetail } from 'src/app/core/model/product-details.model';
 import { Product } from 'src/app/core/model/product.model';
@@ -37,7 +40,15 @@ export class ProductDetailsComponent implements OnInit {
     downloadSource: [],
   };
 
-  constructor(private store: Store, private route: ActivatedRoute) {
+  currentCommentForm = this.formBuilder.group({
+    comment: [''],
+  });
+  isUserLoggedIn$: Observable<boolean>;
+  constructor(
+    private store: Store,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
+  ) {
     const defautItem = {
       id: -1,
       name: 'default',
@@ -69,6 +80,9 @@ export class ProductDetailsComponent implements OnInit {
     this.commentList$ = this.store.select(
       DetailProductSelector.selectCommentsProduct
     );
+    this.isUserLoggedIn$ = this.store.select(
+      AuthenticationStatusSelector.selectIsLoggedIn
+    );
   }
 
   ngOnInit(): void {
@@ -82,5 +96,13 @@ export class ProductDetailsComponent implements OnInit {
         productId: Number(productId),
       })
     );
+  }
+
+  onSubmitComment(): void {
+    console.log('on submitComment', this.currentCommentForm.value);
+  }
+  onRedirectForLogin(event: any): void {
+    console.log(' redirect login ', event);
+    this.store.dispatch(LoginPageActions.loadLoginPages());
   }
 }
