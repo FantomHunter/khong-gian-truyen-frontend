@@ -4,4 +4,5 @@ export interface Comment {
   time: Date;
   content: string;
   avatarUrl: string;
+  productId: number;
 }

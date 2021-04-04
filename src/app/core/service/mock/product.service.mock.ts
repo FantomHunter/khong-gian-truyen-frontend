@@ -149,7 +149,7 @@ export class ProductServiceMock extends ProductServiceApi {
   }
 
   getNewCommentProducts(size: number): Observable<Product[]> {
-    console.log('get new comments products list with size: ', size);
+    console.log('get products list which have news comments with size: ', size);
 
     let sideBarCommentList: Product[] = [];
     const defautItem = {
@@ -172,18 +172,30 @@ export class ProductServiceMock extends ProductServiceApi {
   }
 
   getProductComments(size: number, productId: number): Observable<Comment[]> {
+    console.log(
+      'get comments of products with product id: ',
+      productId,
+      ', size',
+      size
+    );
     const defautComment: Comment = {
       id: -1,
       username: 'commenuser',
       avatarUrl: 'https://source.unsplash.com/1600x900/?product',
       content: 'this is the review content',
       time: new Date(1609834043000),
+      productId: productId,
     };
     let commentList = [];
     for (let i = 0; i < size; i++) {
       commentList.push({ ...defautComment, id: i });
     }
     return of(commentList).pipe(delay(2000));
+  }
+
+  addCommentToProduct(comment: string, productId: number): Observable<string> {
+    console.log('add new comments for  products with id: ', productId);
+    return of('OK').pipe(delay(2000));
   }
 
   constructor() {

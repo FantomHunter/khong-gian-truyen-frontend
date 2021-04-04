@@ -19,6 +19,7 @@ export class CommentComponent implements OnInit {
     avatarUrl: 'https://source.unsplash.com/1600x900/?product',
     content: 'this is the review content',
     time: new Date(1609834043000),
+    productId: -1,
   };
 
   constructor() {}

@@ -21,3 +21,12 @@ export const loadProductCommentApisFailure = createAction(
   '[ProductCommentApi] Load Product Comment Failure',
   props<{ error: any }>()
 );
+
+export const addCommentApisSuccess = createAction(
+  '[CommentApi] Add Comment Success'
+);
+
+export const addCommentApisFailure = createAction(
+  '[CommentApi] Add Comment Failure',
+  props<{ error: any }>()
+);

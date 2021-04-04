@@ -59,16 +59,8 @@ export class ProductDetailsComponent implements OnInit {
       nbView: 300,
       imageUrl: 'https://source.unsplash.com/1600x900/?product',
     };
-    const defautComment: Comment = {
-      id: -1,
-      username: 'commenuser',
-      avatarUrl: 'https://source.unsplash.com/1600x900/?product',
-      content: 'this is the review content',
-      time: new Date(1609834043000),
-    };
     for (let i = 0; i < 6; i++) {
       this.relatedList.push(defautItem);
-      this.commentList.push(defautComment);
     }
     this.relatedList$ = of(this.relatedList);
     this.currentProductDetails$ = this.store.select(
@@ -95,8 +87,15 @@ export class ProductDetailsComponent implements OnInit {
     );
   }
 
-  onSubmitComment(): void {
+  onSubmitComment(productId: number): void {
     console.log('on submitComment', this.currentCommentForm.value);
+    this.store.dispatch(
+      DetailsPageActions.addNewComment({
+        comment: this.currentCommentForm.value,
+        prodId: productId,
+      })
+    );
+    this.currentCommentForm.reset();
   }
   onRedirectForLogin(event: any): void {
     console.log(' redirect login ', event);

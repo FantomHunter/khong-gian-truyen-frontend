@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
+import { Comment } from '../model/comment.model';
 import { ProductDetail } from '../model/product-details.model';
 import { ProductPaging } from '../model/product-paging.model';
 import { Product } from '../model/product.model';
-import { Comment } from '../model/comment.model';
 import { TopViewsFilter } from '../model/top-views-filter.enum.model';
 
 export abstract class ProductServiceApi {
@@ -22,4 +22,8 @@ export abstract class ProductServiceApi {
     size: number,
     productId: number
   ): Observable<Comment[]>;
+  abstract addCommentToProduct(
+    comment: string,
+    productId: number
+  ): Observable<string>;
 }
