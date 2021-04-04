@@ -2,8 +2,11 @@ import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { tap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { tap, withLatestFrom } from 'rxjs/operators';
 import { LoginApiActions, LoginPageActions } from 'src/app/auth/store/action';
+import { AuthenticationStatusSelector } from 'src/app/auth/store/selector';
+import { AppState } from 'src/app/reducers';
 import { environment } from 'src/environments/environment';
 import { ProductItemAction, TrendingPageActions } from '../action';
 
@@ -36,7 +39,7 @@ export class RouteEffects {
     () =>
       this.actions$.pipe(
         ofType(LoginPageActions.loadLoginPages),
-        tap(() => {
+        tap(({ redirectUrl }) => {
           this.router.navigate(['/login']);
         })
       ),
@@ -47,15 +50,15 @@ export class RouteEffects {
     () =>
       this.actions$.pipe(
         ofType(LoginApiActions.loadLoginApiSuccess),
-        tap(() => {
+        withLatestFrom(
+          this.store.pipe(
+            select(AuthenticationStatusSelector.selectRedirectUrl)
+          )
+        ),
+        tap(([{ user }, redirectUrl]) => {
           if (!environment.production) {
-            // this.router.navigate(['/all']);
-            const currentNavigation = this.router.getCurrentNavigation();
-            console.log(
-              'previous navigation',
-              currentNavigation?.previousNavigation
-            );
-            this.location.back();
+            console.log('user: ', user, '| redirectUrl: ', redirectUrl);
+            this.router.navigateByUrl(redirectUrl);
           }
         })
       ),
@@ -64,6 +67,7 @@ export class RouteEffects {
   constructor(
     private actions$: Actions,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private store: Store<AppState>
   ) {}
 }

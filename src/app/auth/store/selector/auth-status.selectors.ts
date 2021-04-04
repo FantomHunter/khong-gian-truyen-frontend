@@ -14,3 +14,8 @@ export const selectIsLoggedIn = createSelector(
   selectAuthenticationStatusState,
   (state) => (state.user != null ? true : false)
 );
+
+export const selectRedirectUrl = createSelector(
+  selectAuthenticationStatusState,
+  (state) => state.redirectUrl
+);

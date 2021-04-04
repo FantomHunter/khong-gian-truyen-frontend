@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { LoginPageActions } from 'src/app/auth/store/action';
@@ -46,7 +46,8 @@ export class ProductDetailsComponent implements OnInit {
   isUserLoggedIn$: Observable<boolean>;
   constructor(
     private store: Store,
-    private route: ActivatedRoute,
+    private activeRoute: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder
   ) {
     const defautItem = {
@@ -70,10 +71,6 @@ export class ProductDetailsComponent implements OnInit {
       this.commentList.push(defautComment);
     }
     this.relatedList$ = of(this.relatedList);
-    // this.commentList$ = of(this.commentList);
-    // this.currentProductDetails$ = of(this.currentProductDetails).pipe(
-    //   delay(1000)
-    // );
     this.currentProductDetails$ = this.store.select(
       DetailProductSelector.selectDetailsProduct
     );
@@ -86,7 +83,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const productId = this.route.snapshot.paramMap.get('id');
+    const productId = this.activeRoute.snapshot.paramMap.get('id');
     this.store.dispatch(
       DetailsPageActions.loadDetailsPages({ id: Number(productId) })
     );
@@ -103,6 +100,8 @@ export class ProductDetailsComponent implements OnInit {
   }
   onRedirectForLogin(event: any): void {
     console.log(' redirect login ', event);
-    this.store.dispatch(LoginPageActions.loadLoginPages());
+    this.store.dispatch(
+      LoginPageActions.loadLoginPages({ redirectUrl: this.router.url })
+    );
   }
 }

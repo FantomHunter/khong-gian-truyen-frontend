@@ -35,7 +35,7 @@ export class ProductServiceMock extends ProductServiceApi {
   }
 
   getProductDetail(id: number): Observable<ProductDetail> {
-    console.log('get product deail for id: ', id);
+    console.log('get product detail for id: ', id);
     if (isNaN(id)) {
       return throwError('id not exist');
     }

@@ -9,10 +9,10 @@ import { AuthenticationServiceApi } from '../auth.service.api';
 })
 export class AuthenticationServiceMock extends AuthenticationServiceApi {
   login(credential: Credential): Observable<User> {
+    console.log('login with credential: ', credential);
     if (credential.username !== 'test' && credential.username !== 'ngrx') {
       return throwError('Invalid username or password');
     }
-
     return of({
       id: 'mock-id',
       name: 'User',
@@ -20,6 +20,7 @@ export class AuthenticationServiceMock extends AuthenticationServiceApi {
       refreshToken: 'refresh token',
     }).pipe(delay(3000));
   }
+
   constructor() {
     super();
   }
