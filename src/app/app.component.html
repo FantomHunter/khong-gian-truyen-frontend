@@ -12,8 +12,8 @@
           <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['/']">Homepage</a>
           </li>
           <li routerLinkActive="active"><a [routerLink]="['/all']">All Products </a></li>
-          <li><a href="./blog.html">Our Blog</a></li>
-          <li><a href="#">Contacts</a></li>
+          <!-- <li><a href="./blog.html">Our Blog</a></li>
+          <li><a href="#">Contacts</a></li> -->
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
@@ -22,9 +22,10 @@
               <span class="icon_profile"></span>
             </a>
             <div class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item py-1" href="#">Action</a>
-              <a class="dropdown-item py-1" href="#">Another action</a>
-              <a class="dropdown-item py-1" href="#">Something else here</a>
+              <a class="dropdown-item py-1" *ngIf="!(isUserLoggedIn$|async);else elseBlock" [routerLink]="['/login']">Login</a>
+              <ng-template #elseBlock>
+                <a class="dropdown-item py-1" (click)=onLogout()>Logout</a>
+              </ng-template>
             </div>
           </li>
         </ul>

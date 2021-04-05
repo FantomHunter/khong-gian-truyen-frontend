@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
 import { tap, withLatestFrom } from 'rxjs/operators';
-import { LoginApiActions, LoginPageActions } from 'src/app/auth/store/action';
+import { LoginApiActions, LoginPageActions, NavbarActions } from 'src/app/auth/store/action';
 import { AuthenticationStatusSelector } from 'src/app/auth/store/selector';
 import { AppState } from 'src/app/reducers';
 import { environment } from 'src/environments/environment';
@@ -64,6 +64,18 @@ export class RouteEffects {
       ),
     { dispatch: false }
   );
+
+  redirectAfterLogout$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(NavbarActions.logout),
+        tap(() => {
+          this.router.navigate(['/']);
+        })
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private router: Router,

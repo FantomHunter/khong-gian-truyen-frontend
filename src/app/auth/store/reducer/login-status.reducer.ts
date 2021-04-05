@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { User } from 'src/app/core/model/user.model';
-import { LoginApiActions, LoginPageActions } from '../action';
+import { LoginApiActions, LoginPageActions, NavbarActions } from '../action';
 
 export const loginStatusFeatureKey = 'loginStatus';
 
@@ -27,5 +27,9 @@ export const reducer = createReducer(
   on(LoginApiActions.loadLoginApiFailure, (state, action) => ({
     ...state,
     user: null,
+  })),
+  on(NavbarActions.logout, (state, action) => ({
+    user: null,
+    redirectUrl: '/',
   }))
 );
