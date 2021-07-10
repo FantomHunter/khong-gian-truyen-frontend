@@ -28,4 +28,8 @@ export class AppComponent {
       LoginPageActions.loadLoginPages({ redirectUrl: this.router.url })
     );
   }
+
+  reloadPage() {
+    location.replace(location.href);
+  }
 }
