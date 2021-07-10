@@ -30,6 +30,6 @@ export class AppComponent {
   }
 
   reloadPage() {
-    location.replace(location.href);
+    location.replace(document.getElementsByTagName('base')[0].href);
   }
 }
