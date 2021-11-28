@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
@@ -10,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { AuthenticationServiceApi } from './core/service/auth.service.api';
+import { ApplicationConfigService } from './core/service/jhipster/core/config/application-config.service';
 import { AuthenticationServiceMock } from './core/service/mock/auth.service.mock';
 import { metaReducers, reducers } from './reducers';
 import { SharedModule } from './shared/shared.module';
@@ -18,16 +20,17 @@ import { SharedModule } from './shared/shared.module';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     SharedModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-      logOnly: environment.production,
+      logOnly: environment.debug,
     }),
     EffectsModule.forRoot([]),
     StoreModule.forRoot(reducers, { metaReducers }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    !environment.debug ? StoreDevtoolsModule.instrument() : [],
     StoreRouterConnectingModule.forRoot(),
     SweetAlert2Module.forRoot(),
     AuthModule,
@@ -35,11 +38,15 @@ import { SharedModule } from './shared/shared.module';
   providers: [
     {
       provide: AuthenticationServiceApi,
-      useClass: !environment.production
+      useClass: !environment.useMockService
         ? AuthenticationServiceMock
         : AuthenticationServiceMock,
     },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(applicationConfigService: ApplicationConfigService) {
+    applicationConfigService.setEndpointPrefix(environment.backendUrl);
+  }
+}

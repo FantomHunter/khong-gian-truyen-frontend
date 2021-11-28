@@ -5,6 +5,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { environment } from 'src/environments/environment';
+import { ProductServiceJhipster } from '../core/service/jhipster/product.service.jhipster';
 import { ProductServiceMock } from '../core/service/mock/product.service.mock';
 import { ProductServiceApi } from '../core/service/product.service.api';
 import { SharedModule } from '../shared/shared.module';
@@ -68,8 +69,8 @@ import * as fromTrending from './store/reducer/trending.reducer';
   providers: [
     {
       provide: ProductServiceApi,
-      useClass: !environment.production
-        ? ProductServiceMock
+      useClass: !environment.useMockService
+        ? ProductServiceJhipster
         : ProductServiceMock,
     },
   ],
