@@ -6,12 +6,14 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { AuthenticationServiceApi } from './core/service/auth.service.api';
 import { ApplicationConfigService } from './core/service/jhipster/core/config/application-config.service';
+import { httpInterceptorProviders } from './core/service/jhipster/core/interceptor';
 import { AuthenticationServiceMock } from './core/service/mock/auth.service.mock';
 import { metaReducers, reducers } from './reducers';
 import { SharedModule } from './shared/shared.module';
@@ -33,6 +35,7 @@ import { SharedModule } from './shared/shared.module';
     !environment.debug ? StoreDevtoolsModule.instrument() : [],
     StoreRouterConnectingModule.forRoot(),
     SweetAlert2Module.forRoot(),
+    NgxWebstorageModule.forRoot(),
     AuthModule,
   ],
   providers: [
@@ -42,6 +45,7 @@ import { SharedModule } from './shared/shared.module';
         ? AuthenticationServiceMock
         : AuthenticationServiceMock,
     },
+    httpInterceptorProviders,
   ],
   bootstrap: [AppComponent],
 })
