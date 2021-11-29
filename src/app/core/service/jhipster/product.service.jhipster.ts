@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as _ from 'lodash';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { Comment } from 'src/app/core/model/comment.model';
@@ -7,18 +8,22 @@ import { ProductPaging } from 'src/app/core/model/product-paging.model';
 import { Product } from 'src/app/core/model/product.model';
 import { TopViewsFilter } from 'src/app/core/model/top-views-filter.enum.model';
 import { ProductServiceApi } from '../product.service.api';
-import { ProductService } from './entities/product/service/product.service';
-import * as _ from 'lodash';
 import {
+  convertToComment,
   convertToProduct,
   convertToProductDetail,
 } from './adapter/product.adapter';
+import { CommentExtendsService } from './entities/comment/service/comment.extends.service';
+import { ProductService } from './entities/product/service/product.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductServiceJhipster extends ProductServiceApi {
-  constructor(private productService: ProductService) {
+  constructor(
+    private productService: ProductService,
+    private commentExtendsService: CommentExtendsService
+  ) {
     super();
   }
 
@@ -177,19 +182,13 @@ export class ProductServiceJhipster extends ProductServiceApi {
       ', size',
       size
     );
-    const defautComment: Comment = {
-      id: -1,
-      username: 'commenuser',
-      avatarUrl: 'https://source.unsplash.com/1600x900/?product',
-      content: 'this is the review content',
-      time: new Date(1609834043000),
-      productId: productId,
-    };
-    let commentList = [];
-    for (let i = 0; i < size; i++) {
-      commentList.push({ ...defautComment, id: i });
-    }
-    return of(commentList).pipe(delay(2000));
+    return this.commentExtendsService
+      .queryCommentsByProduct(productId, {
+        page: 0,
+        size: size,
+        sort: ['id', 'asc'],
+      })
+      .pipe(map((data) => _.map(data.body, convertToComment)));
   }
 
   addCommentToProduct(comment: string, productId: number): Observable<string> {

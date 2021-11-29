@@ -13,7 +13,7 @@ export class MissingTranslationHandlerImpl implements MissingTranslationHandler 
 
 export function translatePartialLoader(http: HttpClient): TranslateLoader {
   let I18N_HASH= 'generated_hash'
-  return new TranslateHttpLoader(http, 'i18n/', `.json?_=${I18N_HASH}`);
+  return new TranslateHttpLoader(http, 'i18n/', `.json?_=generated_hash`);
 }
 
 export function missingTranslationHandler(): MissingTranslationHandler {

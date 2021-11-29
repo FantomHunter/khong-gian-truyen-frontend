@@ -58,8 +58,9 @@ export class RouteEffects {
         tap(([{ user }, redirectUrl]) => {
           if (!environment.debug) {
             console.log('user: ', user, '| redirectUrl: ', redirectUrl);
-            this.router.navigateByUrl(redirectUrl);
+            // this.router.navigateByUrl(redirectUrl);
           }
+            this.router.navigateByUrl(redirectUrl);
         })
       ),
     { dispatch: false }

@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
 import { AuthenticationServiceApi } from 'src/app/core/service/auth.service.api';
-import { LoginApiActions, LoginPageActions } from '../action';
+import { LoginApiActions, LoginPageActions, NavbarActions } from '../action';
 import swal from 'sweetalert2';
 
 @Injectable()
@@ -27,6 +27,15 @@ export class LoginEffects {
       this.actions$.pipe(
         ofType(LoginApiActions.loadLoginApiFailure),
         tap(({ error }) => swal.fire('Login Failed', error, 'error'))
+      ),
+    { dispatch: false }
+  );
+
+  logOut$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(NavbarActions.logout),
+        tap(() => this.authService.logout())
       ),
     { dispatch: false }
   );

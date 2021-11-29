@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Credential, User } from '../../model/user.model';
 import { AuthenticationServiceApi } from '../auth.service.api';
@@ -12,6 +12,7 @@ export class AuthenticationServiceJhipster extends AuthenticationServiceApi {
   constructor(private loginService: LoginService) {
     super();
   }
+
   login(credential: Credential): Observable<User> {
     return this.loginService
       .login({
@@ -23,11 +24,16 @@ export class AuthenticationServiceJhipster extends AuthenticationServiceApi {
         map((account) => {
           return {
             id: 'real-user',
-            name: account?.firstName? account.firstName: 'User',
+            name: account?.firstName ? account.firstName : 'User',
             token: 'alskdfjlwiuoejflskjd',
             refreshToken: 'refresh token',
           };
         })
       );
+  }
+
+  logout(): Observable<void> {
+    this.loginService.logout();
+    return of(void 0);
   }
 }

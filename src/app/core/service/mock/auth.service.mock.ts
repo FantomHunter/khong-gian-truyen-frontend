@@ -8,6 +8,9 @@ import { AuthenticationServiceApi } from '../auth.service.api';
   providedIn: 'root',
 })
 export class AuthenticationServiceMock extends AuthenticationServiceApi {
+  logout(): Observable<void> {
+    throw new Error('Method not implemented.');
+  }
   login(credential: Credential): Observable<User> {
     console.log('login with credential: ', credential);
     if (credential.username !== 'test' && credential.username !== 'ngrx') {
