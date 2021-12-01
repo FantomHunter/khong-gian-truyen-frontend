@@ -91,7 +91,7 @@ export class ProductDetailsComponent implements OnInit {
     console.log('on submitComment', this.currentCommentForm.value);
     this.store.dispatch(
       DetailsPageActions.addNewComment({
-        comment: this.currentCommentForm.value,
+        comment: this.currentCommentForm.value.comment,
         prodId: productId,
       })
     );

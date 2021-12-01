@@ -192,7 +192,13 @@ export class ProductServiceJhipster extends ProductServiceApi {
   }
 
   addCommentToProduct(comment: string, productId: number): Observable<string> {
-    console.log('add new comments for  products with id: ', productId);
-    return of('OK').pipe(delay(2000));
+    // console.log('add new comments for  products with id: ', productId);
+    // return of('OK').pipe(delay(2000));
+    return this.commentExtendsService.createComment(productId, comment).pipe(
+      map((data) => {
+        console.log('addCommentToProduct :', data);
+        return 'ok';
+      })
+    );
   }
 }

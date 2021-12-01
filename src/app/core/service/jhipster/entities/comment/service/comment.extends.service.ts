@@ -27,4 +27,17 @@ export class CommentExtendsService extends CommentService {
         )
       );
   }
+
+  createComment(
+    productId: number,
+    content: string
+  ): Observable<EntityResponseType> {
+    return this.http
+      .post<IComment>(
+        `${this.resourceUrl}/extends`,
+        { content: content, productId: productId },
+        { observe: 'response' }
+      )
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
 }
