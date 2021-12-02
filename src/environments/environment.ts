@@ -7,6 +7,13 @@ export const environment = {
   backendUrl: 'http://localhost:8080/',
   debug: true,
   useMockService: false,
+  features: {
+    productDetail: {
+      comment: {
+        size: 5
+      }
+    }
+  }
 
 };
 

@@ -4,6 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, concatMap, map, withLatestFrom } from 'rxjs/operators';
 import { ProductServiceApi } from 'src/app/core/service/product.service.api';
+import { environment } from 'src/environments/environment';
 import { DetailsApiActions, DetailsPageActions } from '../action';
 import { DetailProductSelector } from '../selector';
 
@@ -68,7 +69,7 @@ export class DetailsEffects {
       ),
       concatMap(([[{}, comments], productDetail]) =>
         this.productServiceApi
-          .getProductComments(comments.length, productDetail.id)
+          .getProductComments(environment.features.productDetail.comment.size, productDetail.id)
           .pipe(
             map((comments) =>
               DetailsApiActions.loadProductCommentApisSuccess({ comments })

@@ -8,6 +8,7 @@ import { AuthenticationStatusSelector } from 'src/app/auth/store/selector';
 import { Comment } from 'src/app/core/model/comment.model';
 import { ProductDetail } from 'src/app/core/model/product-details.model';
 import { Product } from 'src/app/core/model/product.model';
+import { environment } from 'src/environments/environment';
 import { DetailsPageActions } from '../store/action';
 import { DetailProductSelector } from '../store/selector';
 
@@ -81,7 +82,7 @@ export class ProductDetailsComponent implements OnInit {
     );
     this.store.dispatch(
       DetailsPageActions.loadProductComments({
-        size: 5,
+        size: environment.features.productDetail.comment.size,
         productId: Number(productId),
       })
     );
