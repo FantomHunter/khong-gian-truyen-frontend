@@ -33,7 +33,7 @@ export class ProductServiceJhipster extends ProductServiceApi {
       .query({
         page: 0,
         size: size,
-        sort: ['id', 'asc'],
+        sort: ['id,asc'],
       })
       .pipe(
         map((data) => {
@@ -111,7 +111,7 @@ export class ProductServiceJhipster extends ProductServiceApi {
       .query({
         page: page,
         size: size,
-        sort: ['id', 'asc'],
+        sort: ['id,asc'],
       })
       .pipe(
         map((data) => {
@@ -186,7 +186,7 @@ export class ProductServiceJhipster extends ProductServiceApi {
       .queryCommentsByProduct(productId, {
         page: 0,
         size: size,
-        sort: ['id', 'asc'],
+        sort: ['id,desc'],
       })
       .pipe(map((data) => _.map(data.body, convertToComment)));
   }
