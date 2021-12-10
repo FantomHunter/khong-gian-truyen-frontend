@@ -1,7 +1,8 @@
+import { ResourceDownloadExtendsService } from './entities/resource-download/service/resource-download.extends.service';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { Observable, of, throwError } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { delay, map, withLatestFrom } from 'rxjs/operators';
 import { Comment } from 'src/app/core/model/comment.model';
 import { ProductDetail } from 'src/app/core/model/product-details.model';
 import { ProductPaging } from 'src/app/core/model/product-paging.model';
@@ -12,6 +13,7 @@ import {
   convertToComment,
   convertToProduct,
   convertToProductDetail,
+  convertToResouceDownload,
 } from './adapter/product.adapter';
 import { CommentExtendsService } from './entities/comment/service/comment.extends.service';
 import { ProductService } from './entities/product/service/product.service';
@@ -22,7 +24,8 @@ import { ProductService } from './entities/product/service/product.service';
 export class ProductServiceJhipster extends ProductServiceApi {
   constructor(
     private productService: ProductService,
-    private commentExtendsService: CommentExtendsService
+    private commentExtendsService: CommentExtendsService,
+    private resourceDownloadExtendsService: ResourceDownloadExtendsService
   ) {
     super();
   }
@@ -88,6 +91,19 @@ export class ProductServiceJhipster extends ProductServiceApi {
         return data.body
           ? convertToProductDetail(data.body)
           : currentProductDetails;
+      }),
+      withLatestFrom(
+        this.resourceDownloadExtendsService
+          .getResourceDownloadByProduct(id)
+          .pipe(
+            map((data) => {
+              return _.map(data.body, convertToResouceDownload);
+            })
+          )
+      ),
+      map(([productDetail, resourceDowloadList]) => {
+        productDetail.downloadSource = resourceDowloadList;
+        return productDetail;
       })
     );
   }
