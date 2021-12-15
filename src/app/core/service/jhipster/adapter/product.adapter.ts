@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { Comment } from 'src/app/core/model/comment.model';
 import {
   DownloadSource,
-  ProductDetail
+  ProductDetail,
 } from 'src/app/core/model/product-details.model';
 import * as productApp from 'src/app/core/model/product.model';
 import { ICategory } from '../entities/category/category.model';
@@ -18,7 +18,9 @@ export function convertToProduct(productDto: IProduct): productApp.Product {
     categoryList: _.map(productDto.categories, convertToCategory),
     nbComment: productDto.comments ? productDto.comments.length : 0,
     nbView: 300,
-    imageUrl: 'https://source.unsplash.com/1600x900/?product',
+    imageUrl: productDto.imageUrl
+      ? productDto.imageUrl
+      : 'https://source.unsplash.com/1600x900/?product',
   };
 }
 
@@ -38,7 +40,9 @@ export function convertToProductDetail(productDto: IProduct): ProductDetail {
         ? productDto.author.name
         : 'author'
       : 'author',
-    imageUrl: 'https://source.unsplash.com/1600x900/?product',
+    imageUrl: productDto.imageUrl
+      ? productDto.imageUrl
+      : 'https://source.unsplash.com/1600x900/?product',
     nbComment: productDto.comments ? productDto.comments.length : 0,
     nbLike: productDto.likes ? productDto.likes.length : 0,
     nbView: 30,
