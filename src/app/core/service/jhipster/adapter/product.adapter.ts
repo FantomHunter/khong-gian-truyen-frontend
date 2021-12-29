@@ -18,7 +18,7 @@ export function convertToProduct(productDto: IProduct): productApp.Product {
     categoryList: _.map(productDto.categories, convertToCategory),
     nbComment: productDto.comments ? productDto.comments.length : 0,
     nbView: 300,
-    imageUrl: productDto.imageUrl
+    imageUrl: productDto.imageUrl?.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/)
       ? productDto.imageUrl
       : 'https://source.unsplash.com/1600x900/?product',
   };
@@ -40,7 +40,7 @@ export function convertToProductDetail(productDto: IProduct): ProductDetail {
         ? productDto.author.name
         : 'author'
       : 'author',
-    imageUrl: productDto.imageUrl
+    imageUrl: productDto.imageUrl?.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/)
       ? productDto.imageUrl
       : 'https://source.unsplash.com/1600x900/?product',
     nbComment: productDto.comments ? productDto.comments.length : 0,

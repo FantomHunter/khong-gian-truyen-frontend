@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendUrl: 'http://localhost:8080/',
+  backendUrl: 'http://localhost:9000/',
   debug: true,
   useMockService: false,
   features: {
