@@ -17,7 +17,7 @@ export function convertToProduct(productDto: IProduct): productApp.Product {
     status: productDto.status ? productDto.status : 'comming',
     categoryList: _.map(productDto.categories, convertToCategory),
     nbComment: productDto.comments ? productDto.comments.length : 0,
-    nbView: 300,
+    nbView: productDto.totalChapter? productDto.totalChapter: 300,
     imageUrl: productDto.imageUrl?.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/)
       ? productDto.imageUrl
       : 'https://source.unsplash.com/1600x900/?product',

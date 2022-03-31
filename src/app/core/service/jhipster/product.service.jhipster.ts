@@ -1,8 +1,8 @@
 import { ResourceDownloadExtendsService } from './entities/resource-download/service/resource-download.extends.service';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
-import { Observable, of, throwError } from 'rxjs';
-import { delay, map, withLatestFrom } from 'rxjs/operators';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { concatMap, delay, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { Comment } from 'src/app/core/model/comment.model';
 import { ProductDetail } from 'src/app/core/model/product-details.model';
 import { ProductPaging } from 'src/app/core/model/product-paging.model';
@@ -17,6 +17,7 @@ import {
 } from './adapter/product.adapter';
 import { CommentExtendsService } from './entities/comment/service/comment.extends.service';
 import { ProductService } from './entities/product/service/product.service';
+import { IProduct } from './entities/product/product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -130,14 +131,30 @@ export class ProductServiceJhipster extends ProductServiceApi {
         sort: ['id,asc'],
       })
       .pipe(
-        map((data) => {
-          return {
-            currentList: _.map(data.body, convertToProduct),
-            size: size,
-            start: start,
-            total: 500,
-          };
-        })
+        switchMap((data) => {
+          return forkJoin(
+            data.body?.map(product => this.getProductComments(9900, product.id ? product.id : 1).pipe(
+              map(comments => {
+                console.log("comments", comments);
+                // let result: IProduct = { ...product, comments: comments };
+                // return result;
+                return Object.assign({}, product, { ...product, comments: comments })
+              })
+            )
+            )
+          ).pipe(
+            map(productWithCommentList => {
+              // return Object.assign({}, data.body, { productWithCommentList })
+              return {
+                currentList: _.map(productWithCommentList, convertToProduct),
+                size: size,
+                start: start,
+                total: 500,
+              };
+            })
+          );
+        }),
+
       );
   }
 
