@@ -45,7 +45,7 @@ export function convertToProductDetail(productDto: IProduct): ProductDetail {
       : 'https://source.unsplash.com/1600x900/?product',
     nbComment: productDto.comments ? productDto.comments.length : 0,
     nbLike: productDto.likes ? productDto.likes.length : 0,
-    nbView: 30,
+    nbView: productDto.totalChapter ? productDto.totalChapter : 0,
     publishTime: productDto.publishDate
       ? productDto.publishDate.toDate()
       : new Date(),

@@ -40,8 +40,19 @@ export class ProductServiceJhipster extends ProductServiceApi {
         sort: ['id,asc'],
       })
       .pipe(
-        map((data) => {
-          return _.map(data.body, convertToProduct);
+        switchMap((data) => {
+          return forkJoin(
+            data.body?.map(product => this.getProductComments(9900, product.id ? product.id : 1).pipe(
+              map(comments => {
+                return Object.assign({}, product, { ...product, comments: comments })
+              })
+            )
+            )
+          ).pipe(
+            map(productWithCommentList => {
+              return _.map(productWithCommentList, convertToProduct);
+            })
+          );
         })
       );
   }
@@ -102,8 +113,10 @@ export class ProductServiceJhipster extends ProductServiceApi {
             })
           )
       ),
-      map(([productDetail, resourceDowloadList]) => {
+      withLatestFrom(this.getProductComments(9900, id)),
+      map(([[productDetail, resourceDowloadList], comment]) => {
         productDetail.downloadSource = resourceDowloadList;
+        productDetail.nbComment = comment.length;
         return productDetail;
       })
     );

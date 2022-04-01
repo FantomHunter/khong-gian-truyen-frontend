@@ -33,7 +33,7 @@
                                 <div class="col-lg-6 col-md-6">
                                     <ul>
                                         <li><span>Status:</span> {{(currentProductDetails$ | async)?.status}} </li>
-                                        <li><span>Date aired:</span> {{(currentProductDetails$ | async)?.publishTime}}
+                                        <li><span>Publish date:</span> {{(currentProductDetails$ | async)?.publishTime}}
                                         </li>
                                         <li><span>Genre:</span> {{ (currentProductDetails$ |
                                             async)?.categoryList?.join(', ')}}</li>
