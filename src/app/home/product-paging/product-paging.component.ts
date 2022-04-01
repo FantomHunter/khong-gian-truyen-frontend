@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProductPaging } from 'src/app/core/model/product-paging.model';
 import { Product } from 'src/app/core/model/product.model';
+import { environment } from 'src/environments/environment';
 import { AllProductsApiActions } from '../store/action';
 import { AllProductsSelector } from '../store/selector';
 
@@ -22,6 +23,7 @@ export class ProductPagingComponent implements OnInit {
   // hasNext$ = of(true);
   // hasPrevious$ = of(false);
   pagingInfor$: Observable<AllProductsSelector.AllProductPagingInfo>;
+  currentOrderType = 'id';
 
   constructor(private store: Store) {
     this.productPaging$ = this.store.pipe(
@@ -43,24 +45,25 @@ export class ProductPagingComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(
-      AllProductsApiActions.loadAllProducts({ start: 0, size: 10, order: 'id' })
+      AllProductsApiActions.loadAllProducts({ start: 0, size: environment.features.productPaging.size, order: this.currentOrderType })
     );
   }
 
   onReloadPaging(start: number | null): void {
     if (start != null) {
       this.store.dispatch(
-        AllProductsApiActions.loadAllProducts({ start, size: 10, order: 'id' })
+        AllProductsApiActions.loadAllProducts({ start, size: environment.features.productPaging.size, order: this.currentOrderType })
       );
     }
   }
 
   onChangeOrder(orderType: any): void {
     console.log('orderType: ', orderType);
+    this.currentOrderType = orderType;
     this.store.dispatch(
       AllProductsApiActions.loadAllProducts({
         start: 0,
-        size: 10,
+        size: environment.features.productPaging.size,
         order: orderType,
       })
     );

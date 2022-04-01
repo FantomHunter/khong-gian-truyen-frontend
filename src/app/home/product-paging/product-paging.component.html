@@ -13,7 +13,7 @@
                         <select #orderBox (change)="onChangeOrder(orderBox.value)">
                             <option [value]="'id'" [selected]="pagingInfor.order=='id'">Time</option>
                             <option [value]="'name'" [selected]="pagingInfor.order=='name'">Name</option>
-                            <option [value]="'popular'" [selected]="pagingInfor.order=='popular'">Popular</option>
+                            <option [value]="'status'" [selected]="pagingInfor.order=='status'">Status</option>
                         </select>
                     </ng-container>
                 </div>

@@ -141,7 +141,7 @@ export class ProductServiceJhipster extends ProductServiceApi {
       .query({
         page: page,
         size: size,
-        sort: ['id,asc'],
+        sort: [order + ',asc'],
       })
       .pipe(
         switchMap((data) => {

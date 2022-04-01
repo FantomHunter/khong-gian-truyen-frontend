@@ -12,6 +12,9 @@ export const environment = {
       comment: {
         size: 5
       }
+    },
+    productPaging: {
+      size: 9
     }
   }
 
