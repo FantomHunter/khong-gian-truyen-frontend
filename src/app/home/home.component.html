@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="popular__product">
+                <div class="popular__product" *ngIf="isPopularListEnable">
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-8">
                             <div class="section-title">
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="recent__product">
+                <div class="recent__product" *ngIf="isRecentListEnable">
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-8">
                             <div class="section-title">

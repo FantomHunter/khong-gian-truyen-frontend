@@ -15,6 +15,20 @@ export const environment = {
     },
     productPaging: {
       size: 9
+    },
+    popularProduct: {
+      isEnable: false
+    },
+    topNewProduct: {
+      isEnable: false
+    },
+    topViewProduct: {
+      isEnable: false
+    },
+    sidebar: {
+      topViewProduct: {
+        isEnable: false
+      }
     }
   }
 

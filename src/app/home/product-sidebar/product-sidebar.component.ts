@@ -7,6 +7,7 @@ import {
   NewCommentProductSelector,
   TopViewsProductsSelector
 } from 'src/app/home/store/selector';
+import { environment } from 'src/environments/environment';
 import { NewCommentsActions, TopViewsApiActions } from '../store/action';
 
 @Component({
@@ -21,6 +22,7 @@ export class ProductSidebarComponent implements OnInit {
   public TopViewsFilter = TopViewsFilter;
   topViewsFilter$: Observable<TopViewsFilter>;
   sideBarViewList: Product[] = [];
+  isSideBarViewEnable = environment.features.sidebar.topViewProduct.isEnable;
   sideBarCommentList: Product[] = [];
   constructor(private store: Store) {
     this.sideBarCommentList$ = this.store.pipe(

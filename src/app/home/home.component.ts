@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Product } from '../core/model/product.model';
 import { TrendingPageActions } from './store/action';
 import { TrendingProductSelector } from './store/selector';
@@ -13,7 +14,9 @@ import { TrendingProductSelector } from './store/selector';
 export class HomeComponent implements OnInit {
   trendingList$: Observable<Product[]>;
   popularList$: Observable<Product[]>;
+  isPopularListEnable = environment.features.popularProduct.isEnable;
   recentList$: Observable<Product[]>;
+  isRecentListEnable = environment.features.topNewProduct.isEnable;
   trendingList: Product[] = [];
   popularList: Product[] = [];
   recentList: Product[] = [];
@@ -36,8 +39,8 @@ export class HomeComponent implements OnInit {
     this.trendingList$ = this.store.pipe(
       select(TrendingProductSelector.selectAllTrendingProducts)
     );
-    this.popularList$ = of(this.popularList);
-    this.recentList$ = of(this.recentList);
+    this.popularList$ = this.isPopularListEnable ? of(this.popularList) : of(this.popularList);
+    this.recentList$ = this.isRecentListEnable ? of(this.recentList) : of(this.recentList);
   }
 
   ngOnInit(): void {
