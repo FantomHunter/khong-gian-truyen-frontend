@@ -1,8 +1,7 @@
-import { ResourceDownloadExtendsService } from './entities/resource-download/service/resource-download.extends.service';
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
-import { concatMap, delay, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { Comment } from 'src/app/core/model/comment.model';
 import { ProductDetail } from 'src/app/core/model/product-details.model';
 import { ProductPaging } from 'src/app/core/model/product-paging.model';
@@ -13,11 +12,12 @@ import {
   convertToComment,
   convertToProduct,
   convertToProductDetail,
-  convertToResouceDownload,
+  convertToResouceDownload
 } from './adapter/product.adapter';
 import { CommentExtendsService } from './entities/comment/service/comment.extends.service';
+import { ProductExtendsService } from './entities/product/service/product.extends.service';
 import { ProductService } from './entities/product/service/product.service';
-import { IProduct } from './entities/product/product.model';
+import { ResourceDownloadExtendsService } from './entities/resource-download/service/resource-download.extends.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +25,7 @@ import { IProduct } from './entities/product/product.model';
 export class ProductServiceJhipster extends ProductServiceApi {
   constructor(
     private productService: ProductService,
+    private productExtendsService: ProductExtendsService,
     private commentExtendsService: CommentExtendsService,
     private resourceDownloadExtendsService: ResourceDownloadExtendsService
   ) {
@@ -201,24 +202,13 @@ export class ProductServiceJhipster extends ProductServiceApi {
   getNewCommentProducts(size: number): Observable<Product[]> {
     console.log('get products list which have news comments with size: ', size);
 
-    let sideBarCommentList: Product[] = [];
-    const defautItem = {
-      id: -1,
-      name: 'default',
-      status: 'comming',
-      categoryList: ['Action', 'Movie'],
-      nbComment: 30,
-      nbView: 300,
-      imageUrl: 'https://source.unsplash.com/1600x900/?product',
-    };
-    for (let i = 0; i < size; i++) {
-      sideBarCommentList.push({
-        ...defautItem,
-        id: i,
-        name: 'sidebar comment product mock name',
-      });
-    }
-    return of(sideBarCommentList);
+    return this.productExtendsService.queryNewCommentedProduct({
+      page: 0,
+      size: size,
+      sort: [],
+    }).pipe(
+      map(data => _.map(data.body, convertToProduct))
+    )
   }
 
   getProductComments(size: number, productId: number): Observable<Comment[]> {
