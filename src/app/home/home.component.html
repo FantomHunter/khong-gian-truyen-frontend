@@ -1,86 +1,85 @@
 <!-- Hero Section Begin -->
 <section class="hero">
-    <div class="container">
-        <div class="jumbotron hero__slider p-3 p-md-5 text-white rounded bg-dark">
-            <div class="hero__items col-md-6 px-0">
-                <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
-                <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and
-                    efficiently about what's most interesting in this post's contents.</p>
-                <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
-            </div>
-        </div>
+  <div class="container">
+    <div class="jumbotron hero__slider p-3 p-md-5 text-white rounded bg-dark"
+      [ngStyle]="{'background-image': 'url(https://p0.piqsels.com/preview/465/81/320/book-bookcase-books-bookshelf.jpg)'}">
+      <div class="hero__items col-md-6 px-0">
+        <h1 class="display-4 font-italic">Chào mừng đến với Không Gian Truyện</h1>
+        <p class="lead my-3">Tổng hợp đầy đủ và cập nhật liên tục.</p>
+        <!-- <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p> -->
+      </div>
     </div>
+  </div>
 </section>
 <!-- Hero Section End -->
 
 <!-- Product Section Begin -->
 <section class="product spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="trending__product">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-8 col-sm-8">
-                            <div class="section-title">
-                                <h4>Trending Now</h4>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="btn__all">
-                                <a class="btn primary-btn" (click)="onShowAllProduct()">View All <span
-                                        class="arrow_right"></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let product of trendingList$ | async">
-                            <app-product [product]="product"></app-product>
-                        </div>
-                    </div>
-                </div>
-                <div class="popular__product" *ngIf="isPopularListEnable">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-8 col-sm-8">
-                            <div class="section-title">
-                                <h4>Popular Shows</h4>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="btn__all">
-                                <a class="btn primary-btn" (click)="onShowAllProduct()">View All <span class="arrow_right"></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let product of popularList$ | async">
-                            <app-product [product]="product"></app-product>
-                        </div>
-                    </div>
-                </div>
-                <div class="recent__product" *ngIf="isRecentListEnable">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-8 col-sm-8">
-                            <div class="section-title">
-                                <h4>Recently Added Shows</h4>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="btn__all">
-                                <a class="btn primary-btn" (click)="onShowAllProduct()">View All <span class="arrow_right"></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let product of recentList$ |async">
-                            <app-product [product]="product"></app-product>
-                        </div>
-                    </div>
-                </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="trending__product">
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+              <div class="section-title">
+                <h4>Trending Now</h4>
+              </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-8">
-                <app-product-sidebar></app-product-sidebar>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+              <div class="btn__all">
+                <a class="btn primary-btn" (click)="onShowAllProduct()">View All <span class="arrow_right"></span></a>
+              </div>
             </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let product of trendingList$ | async">
+              <app-product [product]="product"></app-product>
+            </div>
+          </div>
         </div>
+        <div class="popular__product" *ngIf="isPopularListEnable">
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+              <div class="section-title">
+                <h4>Popular Shows</h4>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+              <div class="btn__all">
+                <a class="btn primary-btn" (click)="onShowAllProduct()">View All <span class="arrow_right"></span></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let product of popularList$ | async">
+              <app-product [product]="product"></app-product>
+            </div>
+          </div>
+        </div>
+        <div class="recent__product" *ngIf="isRecentListEnable">
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+              <div class="section-title">
+                <h4>Recently Added Shows</h4>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+              <div class="btn__all">
+                <a class="btn primary-btn" (click)="onShowAllProduct()">View All <span class="arrow_right"></span></a>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let product of recentList$ |async">
+              <app-product [product]="product"></app-product>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-8">
+        <app-product-sidebar></app-product-sidebar>
+      </div>
     </div>
+  </div>
 </section>
 <!-- Product Section End -->
