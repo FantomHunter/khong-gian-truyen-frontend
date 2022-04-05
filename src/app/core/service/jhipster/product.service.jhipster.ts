@@ -138,38 +138,20 @@ export class ProductServiceJhipster extends ProductServiceApi {
     );
     let page = start / size;
 
-    return this.productService
-      .query({
-        page: page,
-        size: size,
-        sort: [order + ',asc'],
+    return this.productExtendsService.queryProductWithComments({
+      page: page,
+      size: size,
+      sort: [order + ',asc']
+    }).pipe(
+      map(data => {
+        return {
+          currentList: _.map(data.body?.products, convertToProduct),
+          size: size,
+          start: start,
+          total: data.body?.totalElements ? data.body.totalElements : 100,
+        }
       })
-      .pipe(
-        switchMap((data) => {
-          return forkJoin(
-            data.body?.map(product => this.getProductComments(9900, product.id ? product.id : 1).pipe(
-              map(comments => {
-                console.log("comments", comments);
-                // let result: IProduct = { ...product, comments: comments };
-                // return result;
-                return Object.assign({}, product, { ...product, comments: comments })
-              })
-            )
-            )
-          ).pipe(
-            map(productWithCommentList => {
-              // return Object.assign({}, data.body, { productWithCommentList })
-              return {
-                currentList: _.map(productWithCommentList, convertToProduct),
-                size: size,
-                start: start,
-                total: 500,
-              };
-            })
-          );
-        }),
-
-      );
+    )
   }
 
   getTopViewsProduct(
