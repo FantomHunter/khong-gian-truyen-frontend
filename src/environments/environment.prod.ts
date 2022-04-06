@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  backendUrl: '${BACKEND_URL}',
+  backendUrl: 'https://khong-gian-truyen.herokuapp.com/',
   debug: true,
   useMockService: false,
   features: {
